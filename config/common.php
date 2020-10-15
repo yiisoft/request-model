@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Yiisoft\Router\MiddlewareFactoryInterface;
-use Yiisoft\RequestModel\RequestValidationMiddlewareFactory;
+use Yiisoft\RequestModel\MiddlewareFactory;
 
 return [
-    MiddlewareFactoryInterface::class => RequestValidationMiddlewareFactory::class,
+    MiddlewareFactoryInterface::class => MiddlewareFactory::class,
 ];

@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Yiisoft\Router\MiddlewareFactoryInterface;
 
-final class RequestValidationMiddlewareFactory implements MiddlewareFactoryInterface
+final class MiddlewareFactory implements MiddlewareFactoryInterface
 {
     private ContainerInterface $container;
     private WrapperFactory $wrapperFactory;

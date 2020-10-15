@@ -14,15 +14,15 @@ final class RequestModelFactory
     private Injector $injector;
     private RequestModelValidator $validator;
 
-    public function __construct(RequestModelValidator $validator, Injector $factory)
+    public function __construct(RequestModelValidator $validator, Injector $injector)
     {
         $this->validator = $validator;
-        $this->injector = $factory;
+        $this->injector = $injector;
     }
 
     /**
      * @param ServerRequestInterface $request
-     * @param array $handlerParams
+     * @param array|ReflectionParameter[] $handlerParams
      * @return array
      * @throws ReflectionException
      */
@@ -47,6 +47,10 @@ final class RequestModelFactory
         return $model;
     }
 
+    /**
+     * @param array|ReflectionParameter[] $handlerParams
+     * @return array
+     */
     private function getModelRequestClasses(array $handlerParams): array
     {
         $modelClasses = [];
@@ -71,7 +75,8 @@ final class RequestModelFactory
             'body' => $request->getParsedBody(),
             'attributes' => $request->getAttributes(),
             'headers' => $request->getHeaders(),
-            'files' => $request->getUploadedFiles()
+            'files' => $request->getUploadedFiles(),
+            'cookie' => $request->getCookieParams()
         ];
     }
 

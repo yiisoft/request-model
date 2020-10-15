@@ -24,4 +24,9 @@ abstract class RequestModel implements RequestModelInterface
     {
         return $this->getValue($field) !== null;
     }
+
+    public function getRequestData(): array
+    {
+        return $this->requestData;
+    }
 }
