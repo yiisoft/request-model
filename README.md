@@ -78,7 +78,6 @@ If the data does not pass validation, an exception will be thrown RequestValidat
 If you need to handle an exception and for example send a response, you can intercept its middleware.
 
 For example:
-
 ```php
 final class ExceptionMiddleware implements MiddlewareInterface
 {
