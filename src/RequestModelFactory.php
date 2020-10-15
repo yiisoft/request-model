@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\RequestModel;
+namespace Yiisoft\RequestModel;
 
 use App\Validation\RequestModelInterface;
 use App\Validation\RequestModelValidator;

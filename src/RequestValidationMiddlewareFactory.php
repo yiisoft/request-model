@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\RequestModel;
+namespace Yiisoft\RequestModel;
 
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
