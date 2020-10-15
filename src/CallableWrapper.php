@@ -17,7 +17,7 @@ final class CallableWrapper implements MiddlewareInterface
 {
     private ContainerInterface $container;
     private RequestModelFactory $factory;
-    private $callback;
+    private Closure $callback;
 
     public function __construct(ContainerInterface $container, RequestModelFactory $factory, Closure $callback)
     {

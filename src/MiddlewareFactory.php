@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Yiisoft\Router\MiddlewareFactoryInterface;
+use Closure;
 
 final class MiddlewareFactory implements MiddlewareFactoryInterface
 {
@@ -26,7 +27,7 @@ final class MiddlewareFactory implements MiddlewareFactoryInterface
     }
 
     /**
-     * @param callable|string|array $middlewareDefinition
+     * @param callable|string|array|Closure $middlewareDefinition
      * @return MiddlewareInterface
      */
     private function createMiddleware($middlewareDefinition): MiddlewareInterface
