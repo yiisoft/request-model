@@ -22,7 +22,7 @@ class RequestModelFactoryTest extends TestCase
                 'password' => 'password'
             ]
         );
-        $params = (new ReflectionFunction(fn(SimpleRequestModel $requestModel) => ''))->getParameters();
+        $params = (new ReflectionFunction(fn (SimpleRequestModel $requestModel) => ''))->getParameters();
         $result = $factory->createInstances($request, $params);
 
         $this->assertCount(1, $result);
@@ -53,7 +53,7 @@ class RequestModelFactoryTest extends TestCase
     public function testCorrectlyIfNotFoundRequestModel(): void
     {
         $factory = $this->createRequestModelFactory($this->createContainer());
-        $params = (new ReflectionFunction(fn(ServerRequest $request) => ''))->getParameters();
+        $params = (new ReflectionFunction(fn (ServerRequest $request) => ''))->getParameters();
 
         $this->assertEmpty($factory->createInstances($this->createRequest(), $params));
     }
@@ -64,7 +64,7 @@ class RequestModelFactoryTest extends TestCase
         $this->expectDeprecationMessage('Request model validation error');
 
         $factory = $this->createRequestModelFactory($this->createContainer());
-        $params = (new ReflectionFunction(fn(SimpleValidationRequestModel $requestModel) => ''))->getParameters();
+        $params = (new ReflectionFunction(fn (SimpleValidationRequestModel $requestModel) => ''))->getParameters();
 
         $factory->createInstances($this->createRequest(), $params);
     }
@@ -79,7 +79,7 @@ class RequestModelFactoryTest extends TestCase
             ]
         );
 
-        $params = (new ReflectionFunction(fn(SimpleValidationRequestModel $requestModel) => ''))->getParameters();
+        $params = (new ReflectionFunction(fn (SimpleValidationRequestModel $requestModel) => ''))->getParameters();
         $result = $factory->createInstances($request, $params);
 
         $this->assertCount(1, $result);
