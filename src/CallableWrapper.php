@@ -11,6 +11,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Injector\Injector;
 use ReflectionFunction;
+use Closure;
 
 final class CallableWrapper implements MiddlewareInterface
 {
@@ -18,7 +19,7 @@ final class CallableWrapper implements MiddlewareInterface
     private RequestModelFactory $factory;
     private $callback;
 
-    public function __construct(ContainerInterface $container, RequestModelFactory $factory, callable $callback)
+    public function __construct(ContainerInterface $container, RequestModelFactory $factory, Closure $callback)
     {
         $this->container = $container;
         $this->factory = $factory;

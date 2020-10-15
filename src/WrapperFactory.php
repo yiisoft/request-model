@@ -6,6 +6,7 @@ namespace Yiisoft\RequestModel;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use Closure;
 
 final class WrapperFactory
 {
@@ -18,7 +19,7 @@ final class WrapperFactory
         $this->requestModelFactory = $requestModelFactory;
     }
 
-    public function createCallableWrapper(callable $callback): MiddlewareInterface
+    public function createCallableWrapper(Closure $callback): MiddlewareInterface
     {
         return new CallableWrapper($this->container, $this->requestModelFactory, $callback);
     }
