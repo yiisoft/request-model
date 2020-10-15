@@ -57,7 +57,7 @@ final class RequestModelFactory
         $modelClasses = [];
         foreach ($handlerParams as $param) {
             if ($this->paramsIsRequestModel($param)) {
-                $modelClasses[] = $param->getClass()->getName();
+                $modelClasses[] = $param->getType()->getName();
             }
         }
 
@@ -69,7 +69,7 @@ final class RequestModelFactory
         if (!$param->hasType() || $param->getType()->isBuiltin()) {
             return false;
         }
-        
+
         return (new ReflectionClass($param->getType()->getName()))->implementsInterface(RequestModelInterface::class);
     }
 
