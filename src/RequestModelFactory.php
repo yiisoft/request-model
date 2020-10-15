@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
 use ReflectionException;
+use ReflectionClass;
 
 final class RequestModelFactory
 {
@@ -65,7 +66,11 @@ final class RequestModelFactory
 
     private function paramsIsRequestModel(ReflectionParameter $param): bool
     {
-        return $param->getClass()->implementsInterface(RequestModelInterface::class);
+        if (!$param->hasType() || $param->getType()->isBuiltin()) {
+            return false;
+        }
+        
+        return (new ReflectionClass($param->getType()->getName()))->implementsInterface(RequestModelInterface::class);
     }
 
     private function getRequestData(ServerRequestInterface $request): array
