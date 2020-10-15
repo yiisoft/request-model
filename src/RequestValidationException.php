@@ -8,12 +8,13 @@ use RuntimeException;
 
 final class RequestValidationException extends RuntimeException
 {
+    private const MESSAGE = 'Request model validation error';
     private array $errors;
 
     public function __construct(array $errors)
     {
         $this->errors = $errors;
-        parent::__construct('Request model validation error');
+        parent::__construct(self::MESSAGE);
     }
 
     public function getErrors(): array
@@ -21,8 +22,15 @@ final class RequestValidationException extends RuntimeException
         return $this->errors;
     }
 
-    public function getFirstError(): ?string
+    public function getFirstErrors(): ?array
     {
         return reset($this->errors);
+    }
+
+    public function getFirstError(): ?string
+    {
+        $errors = $this->getFirstErrors();
+
+        return reset($errors);
     }
 }
