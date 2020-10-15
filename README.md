@@ -14,7 +14,7 @@
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Frequest-model%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/request-model/master)
 [![static analysis](https://github.com/yiisoft/request-model/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/request-model/actions?query=workflow%3A%22static+analysis%22)
 
-Request model is used to simplify working with query data. It allows you to decorate data for easy retrieval and automatically validate it when needed.
+Request model is used to simplify working with request data. It allows you to decorate data for easy retrieval and automatically validate it when needed.
 
 ## Installation
 
@@ -26,7 +26,7 @@ composer install yiisoft/request-model
 
 ## General usage
 
-A simple version of the куйгые model looks like this:
+A simple version of the request model looks like this:
 
 ```php 
 use Yiisoft\RequestModel\RequestModel;
@@ -75,7 +75,7 @@ final class SimpleController
 ```
 
 If the data does not pass validation, an exception will be thrown RequestValidationException.
-If you need to handle an exception and for example send a response? you can intercept its middleware.
+If you need to handle an exception and for example send a response, you can intercept its middleware.
 
 For example:
 
