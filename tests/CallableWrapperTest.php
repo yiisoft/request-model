@@ -9,6 +9,7 @@ use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\RequestModel\CallableWrapper;
 use Yiisoft\RequestModel\Tests\Support\SimpleMiddleware;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
+use Closure;
 
 class CallableWrapperTest extends TestCase
 {
@@ -46,7 +47,7 @@ class CallableWrapperTest extends TestCase
         $this->assertEquals(200, $result->getStatusCode());
     }
 
-    private function createWrapper(callable $callback): CallableWrapper
+    private function createWrapper(Closure $callback): CallableWrapper
     {
         $container = $this->createContainer();
         $requestModelFactory = $this->createRequestModelFactory($container);
