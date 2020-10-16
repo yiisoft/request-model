@@ -66,7 +66,7 @@ use Psr\Http\Message\ResponseInterface;
 
 final class SimpleController
 {
-    public function action(SimpleRequestModel $request): ResponseInterface
+    public function action(AuthRequest $request): ResponseInterface
     {
         echo $request->getLogin();
         ...
@@ -92,8 +92,8 @@ final class ExceptionMiddleware implements MiddlewareInterface
 }
 ```
 
-You can use the request model without validation. To do this, the class is fashionable and you need to remove the ValidatableModelInterface interface.
-In this case, the data will also be included in the mod, but will not be validated.
+You can use the request model without validation. To do this, you need to remove the ValidatableModelInterface interface.
+In this case, the data will also be included in the model, but will not be validated.
 For example:
 
 ```php
