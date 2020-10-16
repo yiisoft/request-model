@@ -21,7 +21,7 @@ Request model is used to simplify working with request data. It allows you to de
 The package could be installed with composer:
 
 ```
-composer install yiisoft/request-model
+composer require yiisoft/request-model
 ```
 
 ## General usage
