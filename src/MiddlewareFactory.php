@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Yiisoft\Router\MiddlewareFactoryInterface;
-use Closure;
 
 final class MiddlewareFactory implements MiddlewareFactoryInterface
 {
