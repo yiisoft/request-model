@@ -14,7 +14,8 @@
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Frequest-model%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/request-model/master)
 [![static analysis](https://github.com/yiisoft/request-model/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/request-model/actions?query=workflow%3A%22static+analysis%22)
 
-Request model is used to simplify working with request data. It allows you to decorate data for easy retrieval and automatically validate it when needed.
+Request model simplifies working with request data. It allows you to decorate data for easy retrieval and automatically
+validate it when needed.
 
 ## Installation
 
@@ -26,9 +27,9 @@ composer require yiisoft/request-model
 
 ## General usage
 
-A simple version of the request model looks like this:
+A simple version of the request model looks like the following:
 
-```php 
+```php
 use Yiisoft\RequestModel\RequestModel;
 use Yiisoft\RequestModel\ValidatableModelInterface;
 use Yiisoft\Validator\Rule\Required;
@@ -74,10 +75,11 @@ final class SimpleController
 }
 ```
 
-If the data does not pass validation, an exception will be thrown RequestValidationException.
-If you need to handle an exception and for example send a response, you can intercept its middleware.
+If the data does not pass validation, `RequestValidationException` will be thrown.
+If you need to handle an exception and, for example, send a response, you can intercept its middleware.
 
 For example:
+
 ```php
 final class ExceptionMiddleware implements MiddlewareInterface
 {
@@ -92,9 +94,8 @@ final class ExceptionMiddleware implements MiddlewareInterface
 }
 ```
 
-You can use the request model without validation. To do this, you need to remove the ValidatableModelInterface interface.
-In this case, the data will also be included in the model, but will not be validated.
-For example:
+You can use the request model without validation. To do this, you need to remove the `ValidatableModelInterface`.
+In this case, the data will be included into the model, but will not be validated. For example:
 
 ```php
 final class ViewPostRequest extends RequestModel
@@ -111,7 +112,7 @@ final class ViewPostRequest extends RequestModel
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
-```php
+```
 ./vendor/bin/phpunit
 ```
 
@@ -119,7 +120,7 @@ The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
 The package tests are checked with [Infection](https://infection.github.io/) mutation framework. To run it:
 
-```php
+```
 ./vendor/bin/infection
 ```
 
@@ -127,6 +128,6 @@ The package tests are checked with [Infection](https://infection.github.io/) mut
 
 The code is statically analyzed with [Psalm](https://psalm.dev/). To run static analysis:
 
-```php
+```
 ./vendor/bin/psalm
 ```
