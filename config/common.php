@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Router\MiddlewareFactoryInterface;
+use Yiisoft\Middleware\Dispatcher\MiddlewareFactoryInterface;
 use Yiisoft\RequestModel\MiddlewareFactory;
 
 return [

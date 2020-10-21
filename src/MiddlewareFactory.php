@@ -7,7 +7,7 @@ namespace Yiisoft\RequestModel;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Yiisoft\Router\MiddlewareFactoryInterface;
+use Yiisoft\Middleware\Dispatcher\MiddlewareFactoryInterface;
 
 final class MiddlewareFactory implements MiddlewareFactoryInterface
 {
