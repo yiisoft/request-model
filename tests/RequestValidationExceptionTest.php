@@ -44,6 +44,13 @@ class RequestValidationExceptionTest extends TestCase
         );
     }
 
+    public function testGetEmptyErrors(): void
+    {
+        $emptyException = new RequestValidationException([]);
+
+        $this->assertEquals(null, $emptyException->getFirstError());
+    }
+
     private function createException(): RequestValidationException
     {
         return new RequestValidationException(

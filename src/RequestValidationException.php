@@ -24,13 +24,13 @@ final class RequestValidationException extends RuntimeException
 
     public function getFirstErrors(): ?array
     {
-        return reset($this->errors);
+        return empty($this->errors) ? null : reset($this->errors);
     }
 
     public function getFirstError(): ?string
     {
         $errors = $this->getFirstErrors();
 
-        return reset($errors);
+        return is_null($errors) ? null : reset($errors);
     }
 }
