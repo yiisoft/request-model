@@ -64,6 +64,36 @@ class CallableWrapperTest extends TestCase
         );
     }
 
+    public function testCorrectProcessCallableObject(): void
+    {
+        $obj = new class () {
+            public function __invoke(SimpleRequestModel $request)
+            {
+                return (new SimpleController())->action($request);
+            }
+        };
+
+        $wrapper = $this->createWrapper($obj);
+
+        $request = $this->createRequest(
+            [
+                'login' => 'login',
+                'password' => 'password'
+            ]
+        );
+
+        $result = $wrapper->process($request, $this->createRequestHandler());
+
+        $this->assertEquals(200, $result->getStatusCode());
+        $this->assertEquals(
+            [
+                ['login'],
+                ['password']
+            ],
+            $result->getHeaders()
+        );
+    }
+
     public function testCorrectProcessIfCallbackReturnMiddleware(): void
     {
         $wrapper = $this->createWrapper(fn (SimpleRequestModel $requestModel) => new SimpleMiddleware());
