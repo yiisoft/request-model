@@ -9,10 +9,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use ReflectionFunctionAbstract;
-use Yiisoft\Injector\Injector;
 use ReflectionFunction;
+use ReflectionFunctionAbstract;
 use ReflectionMethod;
+use Yiisoft\Injector\Injector;
 
 final class CallableWrapper implements MiddlewareInterface
 {
@@ -47,8 +47,9 @@ final class CallableWrapper implements MiddlewareInterface
     }
 
     /**
-     * @return ReflectionFunctionAbstract|ReflectionFunction|ReflectionMethod
      * @throws \ReflectionException
+     *
+     * @return ReflectionFunction|ReflectionFunctionAbstract|ReflectionMethod
      */
     private function getReflector(): ReflectionFunctionAbstract
     {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Tests;
 
-use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\RequestModel\ActionWrapper;
 use Yiisoft\RequestModel\Tests\Support\SimpleController;
+use Yiisoft\RequestModel\Tests\Support\TestCase;
 
 class ActionWrapperTest extends TestCase
 {
@@ -24,7 +24,7 @@ class ActionWrapperTest extends TestCase
         $request = $this->createRequest(
             [
                 'login' => 'login',
-                'password' => 'password'
+                'password' => 'password',
             ]
         );
 
@@ -33,7 +33,7 @@ class ActionWrapperTest extends TestCase
         $this->assertEquals(
             [
                 ['login'],
-                ['password']
+                ['password'],
             ],
             $result->getHeaders()
         );

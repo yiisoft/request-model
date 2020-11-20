@@ -15,7 +15,6 @@ use Yiisoft\RequestModel\RequestModelFactory;
 use Yiisoft\RequestModel\RequestModelValidator;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 
-
 abstract class TestCase extends BaseTestCase
 {
     public function createContainer(): ContainerInterface
@@ -23,7 +22,7 @@ abstract class TestCase extends BaseTestCase
         return new SimpleContainer(
             [
                 SimpleMiddleware::class => new SimpleMiddleware(),
-                SimpleController::class => new SimpleController()
+                SimpleController::class => new SimpleController(),
             ]
         );
     }

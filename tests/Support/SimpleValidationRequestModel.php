@@ -28,8 +28,7 @@ final class SimpleValidationRequestModel extends RequestModel implements Validat
             ],
             'body.password' => [
                 new Required(),
-            ]
+            ],
         ];
     }
 }
-

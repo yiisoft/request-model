@@ -31,6 +31,6 @@ final class RequestValidationException extends RuntimeException
     {
         $errors = $this->getFirstErrors();
 
-        return is_null($errors) ? null : reset($errors);
+        return null === $errors ? null : reset($errors);
     }
 }

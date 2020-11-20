@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Tests;
 
-use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\RequestModel\ActionWrapper;
 use Yiisoft\RequestModel\CallableWrapper;
 use Yiisoft\RequestModel\MiddlewareFactory;
 use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\SimpleMiddleware;
+use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\RequestModel\WrapperFactory;
 
 class MiddlewareFactoryTest extends TestCase
@@ -28,7 +28,7 @@ class MiddlewareFactoryTest extends TestCase
 
     public function testCreateFromCallable(): void
     {
-        $middleware = $this->createMiddlewareFactory()->create(fn() => '');
+        $middleware = $this->createMiddlewareFactory()->create(fn () => '');
         $this->assertInstanceOf(CallableWrapper::class, $middleware);
     }
 

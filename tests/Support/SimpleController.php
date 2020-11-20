@@ -12,7 +12,7 @@ final class SimpleController
     {
         return new Response(200, [
             $request->getLogin(),
-            $request->getPassword()
+            $request->getPassword(),
         ]);
     }
 }

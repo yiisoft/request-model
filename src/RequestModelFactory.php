@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel;
 
 use Psr\Http\Message\ServerRequestInterface;
+use ReflectionClass;
+use ReflectionException;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
-use ReflectionException;
-use ReflectionClass;
 
 final class RequestModelFactory
 {
@@ -24,8 +24,10 @@ final class RequestModelFactory
     /**
      * @param ServerRequestInterface $request
      * @param array|ReflectionParameter[] $handlerParams
-     * @return array
+     *
      * @throws ReflectionException
+     *
+     * @return array
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParams): array
     {
@@ -50,6 +52,7 @@ final class RequestModelFactory
 
     /**
      * @param array|ReflectionParameter[] $handlerParams
+     *
      * @return array
      */
     private function getModelRequestClasses(array $handlerParams): array
@@ -81,7 +84,7 @@ final class RequestModelFactory
             'attributes' => $request->getAttributes(),
             'headers' => $request->getHeaders(),
             'files' => $request->getUploadedFiles(),
-            'cookie' => $request->getCookieParams()
+            'cookie' => $request->getCookieParams(),
         ];
     }
 

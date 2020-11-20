@@ -26,7 +26,8 @@ final class MiddlewareFactory implements MiddlewareFactoryInterface
     }
 
     /**
-     * @param callable|string|array $middlewareDefinition
+     * @param array|callable|string $middlewareDefinition
+     *
      * @return MiddlewareInterface
      */
     private function createMiddleware($middlewareDefinition): MiddlewareInterface
@@ -45,7 +46,7 @@ final class MiddlewareFactory implements MiddlewareFactoryInterface
     }
 
     /**
-     * @param callable|string|array $middlewareDefinition
+     * @param array|callable|string $middlewareDefinition
      */
     private function validateMiddleware($middlewareDefinition): void
     {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Tests;
 
-use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\RequestModel\RequestModelValidator;
+use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\Validator\Rule\InRange;
 use Yiisoft\Validator\Rule\Number;
 
@@ -16,7 +16,7 @@ class ValidatorTest extends TestCase
         $data = [
             'page' => 100,
             'per_page' => 10,
-            'sort' => 'asc'
+            'sort' => 'asc',
         ];
 
         $this->assertEmpty($this->createValidator()->validate($data, $this->getRules()));
@@ -27,14 +27,14 @@ class ValidatorTest extends TestCase
         $data = [
             'page' => 'bad_value',
             'per_page' => 'bad value',
-            'sort' => 'bad value'
+            'sort' => 'bad value',
         ];
 
         $this->assertEquals(
             [
                 'page' => ['Value must be a number.'],
                 'per_page' => ['Value must be a number.'],
-                'sort' => ['This value is invalid.']
+                'sort' => ['This value is invalid.'],
             ],
             $this->createValidator()->validate($data, $this->getRules())
         );
@@ -44,13 +44,13 @@ class ValidatorTest extends TestCase
     {
         return [
             'page' => [
-                new Number()
+                new Number(),
             ],
             'per_page' => [
-                new Number()
+                new Number(),
             ],
             'sort' => [
-                new InRange(['asc', 'desc'])
+                new InRange(['asc', 'desc']),
             ],
         ];
     }

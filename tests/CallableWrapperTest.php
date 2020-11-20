@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Tests;
 
 use Nyholm\Psr7\Response;
-use Yiisoft\RequestModel\Tests\Support\SimpleController;
-use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\RequestModel\CallableWrapper;
+use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\SimpleMiddleware;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
+use Yiisoft\RequestModel\Tests\Support\TestCase;
 
 class CallableWrapperTest extends TestCase
 {
@@ -24,7 +24,7 @@ class CallableWrapperTest extends TestCase
         $request = $this->createRequest(
             [
                 'login' => 'login',
-                'password' => 'password'
+                'password' => 'password',
             ]
         );
 
@@ -34,7 +34,7 @@ class CallableWrapperTest extends TestCase
         $this->assertEquals(
             [
                 ['login'],
-                ['password']
+                ['password'],
             ],
             $result->getHeaders()
         );
@@ -48,7 +48,7 @@ class CallableWrapperTest extends TestCase
         $request = $this->createRequest(
             [
                 'login' => 'login',
-                'password' => 'password'
+                'password' => 'password',
             ]
         );
 
@@ -58,7 +58,7 @@ class CallableWrapperTest extends TestCase
         $this->assertEquals(
             [
                 ['login'],
-                ['password']
+                ['password'],
             ],
             $result->getHeaders()
         );
@@ -66,7 +66,7 @@ class CallableWrapperTest extends TestCase
 
     public function testCorrectProcessCallableObject(): void
     {
-        $obj = new class () {
+        $obj = new class() {
             public function __invoke(SimpleRequestModel $request)
             {
                 return (new SimpleController())->action($request);
@@ -78,7 +78,7 @@ class CallableWrapperTest extends TestCase
         $request = $this->createRequest(
             [
                 'login' => 'login',
-                'password' => 'password'
+                'password' => 'password',
             ]
         );
 
@@ -88,7 +88,7 @@ class CallableWrapperTest extends TestCase
         $this->assertEquals(
             [
                 ['login'],
-                ['password']
+                ['password'],
             ],
             $result->getHeaders()
         );

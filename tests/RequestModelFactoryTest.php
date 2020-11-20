@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Tests;
 
 use Nyholm\Psr7\ServerRequest;
-use Yiisoft\RequestModel\Tests\Support\TestCase;
+use ReflectionFunction;
 use Yiisoft\RequestModel\RequestValidationException;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\SimpleValidationRequestModel;
-use ReflectionFunction;
+use Yiisoft\RequestModel\Tests\Support\TestCase;
 
 class RequestModelFactoryTest extends TestCase
 {
@@ -19,7 +19,7 @@ class RequestModelFactoryTest extends TestCase
         $request = $this->createRequest(
             [
                 'login' => 'login',
-                'password' => 'password'
+                'password' => 'password',
             ]
         );
         $params = (new ReflectionFunction(fn (SimpleRequestModel $requestModel) => ''))->getParameters();
@@ -39,12 +39,12 @@ class RequestModelFactoryTest extends TestCase
                 'query' => [],
                 'body' => [
                     'login' => 'login',
-                    'password' => 'password'
+                    'password' => 'password',
                 ],
                 'attributes' => [],
                 'headers' => [],
                 'files' => [],
-                'cookie' => []
+                'cookie' => [],
             ],
             $model->getRequestData()
         );
@@ -75,7 +75,7 @@ class RequestModelFactoryTest extends TestCase
         $request = $this->createRequest(
             [
                 'login' => 'login',
-                'password' => 'password'
+                'password' => 'password',
             ]
         );
 
@@ -90,6 +90,6 @@ class RequestModelFactoryTest extends TestCase
         $model = current($result);
 
         $this->assertEquals('login', $model->getLogin());
-        $this->assertEquals('password', $model->getPassword());;
+        $this->assertEquals('password', $model->getPassword());
     }
 }

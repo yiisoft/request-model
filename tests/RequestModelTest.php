@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Tests;
 
-use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
+use Yiisoft\RequestModel\Tests\Support\TestCase;
 
 class RequestModelTest extends TestCase
 {
@@ -32,12 +32,12 @@ class RequestModelTest extends TestCase
                 'query' => [],
                 'body' => [
                     'login' => 'login',
-                    'password' => 'password'
+                    'password' => 'password',
                 ],
                 'attributes' => [],
                 'headers' => [],
                 'files' => [],
-                'cookie' => []
+                'cookie' => [],
             ],
             $this->createRequestModel()->getRequestData()
         );
@@ -51,12 +51,12 @@ class RequestModelTest extends TestCase
                 'query' => [],
                 'body' => [
                     'login' => 'login',
-                    'password' => 'password'
+                    'password' => 'password',
                 ],
                 'attributes' => [],
                 'headers' => [],
                 'files' => [],
-                'cookie' => []
+                'cookie' => [],
             ],
         );
 

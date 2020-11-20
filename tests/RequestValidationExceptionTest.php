@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Tests;
 
-use Yiisoft\RequestModel\Tests\Support\TestCase;
 use Yiisoft\RequestModel\RequestValidationException;
+use Yiisoft\RequestModel\Tests\Support\TestCase;
 
 class RequestValidationExceptionTest extends TestCase
 {
@@ -15,11 +15,11 @@ class RequestValidationExceptionTest extends TestCase
             [
                 'sort' => [
                     'Bad Value',
-                    'Wrong type value'
+                    'Wrong type value',
                 ],
                 'page' => [
-                    'Bad value'
-                ]
+                    'Bad value',
+                ],
             ],
             $this->createException()->getErrors()
         );
@@ -30,7 +30,7 @@ class RequestValidationExceptionTest extends TestCase
         $this->assertEquals(
             [
                 'Bad Value',
-                'Wrong type value'
+                'Wrong type value',
             ],
             $this->createException()->getFirstErrors()
         );
@@ -57,11 +57,11 @@ class RequestValidationExceptionTest extends TestCase
             [
                 'sort' => [
                     'Bad Value',
-                    'Wrong type value'
+                    'Wrong type value',
                 ],
                 'page' => [
-                    'Bad value'
-                ]
+                    'Bad value',
+                ],
             ]
         );
     }
