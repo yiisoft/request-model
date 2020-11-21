@@ -110,7 +110,7 @@ final class ViewPostRequest extends RequestModel
 
 Inside the request model class, data is available using the following keys:
 
-| key        | source        |
+| key        | source                       |
 | ---------- | ---------------------------- |
 | query      | $request->getQueryParams()   |
 | body       | $request->getParsedBody()    |
