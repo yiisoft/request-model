@@ -108,6 +108,32 @@ final class ViewPostRequest extends RequestModel
 }
 ```
 
+Inside the request model class, data is available using the following keys:
+
+| key        | source                       |
+| ---------- | ---------------------------- |
+| query      | $request->getQueryParams()   |
+| body       | $request->getParsedBody()    |
+| attributes | $request->getAttributes()    |
+| headers    | $request->getHeaders()       |
+| files      | $request->getUploadedFiles() |
+| cookie     | $request->getCookieParams()  |
+
+This data can be obtained as follows 
+
+```php
+$this->requestData['attributes.id'];
+```
+
+or through the methods
+
+```php
+$this->hasValue('body.user_id');
+$this->getValue('body.user_id');
+```
+
+
+
 ### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
