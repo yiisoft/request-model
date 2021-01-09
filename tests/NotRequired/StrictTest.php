@@ -53,7 +53,7 @@ final class StrictTest extends TestCase
     {
         $model = new StrictModel();
 
-        $errors = (new RequestModelValidator())->validate($data, $model->getRules());
+        $errors = (new RequestModelValidator())->validate($model, $data);
         $this->assertEmpty($errors);
 
         $model->setRequestData($data);
@@ -69,7 +69,7 @@ final class StrictTest extends TestCase
     {
         $model = new StrictModel();
 
-        $errors = (new RequestModelValidator())->validate($data, $model->getRules());
+        $errors = (new RequestModelValidator())->validate($model, $data);
         $this->assertNotEmpty($errors);
     }
 }

@@ -54,7 +54,7 @@ final class NotStrictTest extends TestCase
     {
         $model = new NotStrictModel();
 
-        $errors = (new RequestModelValidator())->validate($data, $model->getRules());
+        $errors = (new RequestModelValidator())->validate($model, $data);
         $this->assertEmpty($errors);
 
         $model->setRequestData($data);
@@ -70,7 +70,7 @@ final class NotStrictTest extends TestCase
     {
         $model = new NotStrictModel();
 
-        $errors = (new RequestModelValidator())->validate($data, $model->getRules());
+        $errors = (new RequestModelValidator())->validate($model, $data);
         $this->assertNotEmpty($errors);
     }
 }
