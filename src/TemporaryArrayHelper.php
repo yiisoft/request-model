@@ -13,12 +13,12 @@ final class TemporaryArrayHelper
     {
         if (is_array($key)) {
             if (count($key) === 1) {
-                return static::rootKeyExists($array, end($key), $caseSensitive);
+                return self::rootKeyExists($array, end($key), $caseSensitive);
             }
 
             foreach (self::getExistsKeys($array, array_shift($key), $caseSensitive) as $existKey) {
                 /** @var mixed */
-                $array = static::getRootValue($array, $existKey, null);
+                $array = self::getRootValue($array, $existKey, null);
                 if (is_array($array) && self::keyExists($array, $key, $caseSensitive)) {
                     return true;
                 }
@@ -27,7 +27,7 @@ final class TemporaryArrayHelper
             return false;
         }
 
-        return static::rootKeyExists($array, $key, $caseSensitive);
+        return self::rootKeyExists($array, $key, $caseSensitive);
     }
 
     private static function rootKeyExists(array $array, $key, bool $caseSensitive): bool
@@ -67,13 +67,13 @@ final class TemporaryArrayHelper
         bool $caseSensitive = true,
         string $delimiter = '.'
     ): bool {
-        return static::keyExists($array, static::parsePath($path, $delimiter), $caseSensitive);
+        return self::keyExists($array, self::parsePath($path, $delimiter), $caseSensitive);
     }
 
     private static function getRootValue($array, $key, $default)
     {
         if (is_array($array)) {
-            $key = static::normalizeArrayKey($key);
+            $key = self::normalizeArrayKey($key);
             return array_key_exists($key, $array) ? $array[$key] : $default;
         }
 
@@ -104,7 +104,7 @@ final class TemporaryArrayHelper
             $newPath = [];
             foreach ($path as $key) {
                 if (is_string($key) || is_array($key)) {
-                    $newPath = array_merge($newPath, static::parsePath($key, $delimiter));
+                    $newPath = array_merge($newPath, self::parsePath($key, $delimiter));
                 } else {
                     $newPath[] = $key;
                 }
