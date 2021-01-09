@@ -171,12 +171,10 @@ class ValidatorTest extends TestCase
     {
         return [
             [
-                [
-                    ['query' => ['sort' => 'up']],
-                ],
-                [
-                    ['query' => ['sort' => '']],
-                ],
+                ['query' => ['sort' => 'up']],
+            ],
+            [
+                ['query' => ['sort' => '']],
             ],
         ];
     }
