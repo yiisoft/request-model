@@ -45,7 +45,8 @@ final class RequestModelValidator
         if (!in_array($field, $optionalFields)) {
             return true;
         }
-        return ($strict && TemporaryArrayHelper::pathExists($data, $field)) ||
+
+        return ($strict && ArrayHelper::pathExists($data, $field)) ||
             (!$strict && !empty(ArrayHelper::getValueByPath($data, $field)));
     }
 }
