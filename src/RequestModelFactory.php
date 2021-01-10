@@ -90,7 +90,7 @@ final class RequestModelFactory
 
     private function validateRequest(ValidatableModelInterface $model, array $requestData): void
     {
-        $errors = $this->validator->validate($requestData, $model->getRules());
+        $errors = $this->validator->validate($model, $requestData);
         if (!empty($errors)) {
             throw new RequestValidationException($errors);
         }

@@ -15,8 +15,19 @@ abstract class RequestModel implements RequestModelInterface
         $this->requestData = $requestData;
     }
 
+    /**
+     * @param string $field
+     * @param mixed $default
+     *
+     * @return mixed
+     */
     public function getValue(string $field, $default = null)
     {
+        if ($this->isOptionalField($field)) {
+            $value = ArrayHelper::getValueByPath($this->requestData, $field);
+            return empty($value) ? $default : $value;
+        }
+
         return ArrayHelper::getValueByPath($this->requestData, $field, $default);
     }
 
@@ -28,5 +39,15 @@ abstract class RequestModel implements RequestModelInterface
     public function getRequestData(): array
     {
         return $this->requestData;
+    }
+
+    public function getOptionalFields(): array
+    {
+        return [];
+    }
+
+    private function isOptionalField(string $field): bool
+    {
+        return in_array($field, $this->getOptionalFields());
     }
 }
