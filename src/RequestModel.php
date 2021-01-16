@@ -22,7 +22,7 @@ abstract class RequestModel implements RequestModelInterface
 
     public function hasAttribute(string $attribute): bool
     {
-        return $this->getAttributeValue($attribute) !== null;
+        return ArrayHelper::pathExists($this->requestData, $attribute);
     }
 
     public function getRequestData(): array
