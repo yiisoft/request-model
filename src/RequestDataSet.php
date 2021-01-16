@@ -25,9 +25,4 @@ final class RequestDataSet implements DataSetInterface
     {
         return $this->getAttributeValue($attribute) !== null;
     }
-
-    public function toArray(): array
-    {
-        return $this->requestData;
-    }
 }
