@@ -9,15 +9,16 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
+use Yiisoft\Validator\Result;
+use Yiisoft\Validator\ResultSet;
+use Yiisoft\Validator\Validator;
 
 final class RequestModelFactory
 {
     private Injector $injector;
-    private RequestModelValidator $validator;
 
-    public function __construct(RequestModelValidator $validator, Injector $injector)
+    public function __construct(Injector $injector)
     {
-        $this->validator = $validator;
         $this->injector = $injector;
     }
 
@@ -25,9 +26,9 @@ final class RequestModelFactory
      * @param ServerRequestInterface $request
      * @param array|ReflectionParameter[] $handlerParams
      *
+     * @return array
      * @throws ReflectionException
      *
-     * @return array
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParams): array
     {
@@ -90,9 +91,31 @@ final class RequestModelFactory
 
     private function validateRequest(ValidatableModelInterface $model, array $requestData): void
     {
-        $errors = $this->validator->validate($requestData, $model->getRules());
+        $requestDataSet = new RequestDataSet($requestData);
+        $result = $this->createValidator($model)->validate($requestDataSet);
+        $errors = $this->getErrorsFromValidationResult($result);
         if (!empty($errors)) {
             throw new RequestValidationException($errors);
         }
+    }
+
+    private function createValidator(ValidatableModelInterface $model): Validator
+    {
+        return new Validator($model->getRules());
+    }
+
+    private function getErrorsFromValidationResult(ResultSet $result): array
+    {
+        /**
+         * @var $fieldResult Result
+         */
+        $errors = [];
+        foreach ($result->getIterator() as $field => $fieldResult) {
+            if (!empty($fieldResult->getErrors())) {
+                $errors[$field] = $fieldResult->getErrors();
+            }
+        }
+
+        return $errors;
     }
 }

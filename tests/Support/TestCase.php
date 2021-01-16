@@ -44,8 +44,6 @@ abstract class TestCase extends BaseTestCase
 
     public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory
     {
-        $injector = new Injector($container);
-        $validator = new RequestModelValidator();
-        return new RequestModelFactory($validator, $injector);
+        return new RequestModelFactory(new Injector($container));
     }
 }
