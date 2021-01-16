@@ -45,7 +45,11 @@ final class RequestModelFactory
         $requestData = $this->getRequestData($request);
         $model->setRequestData($requestData);
         if ($model instanceof ValidatableModelInterface) {
-            $this->validateRequest($model, $requestData);
+            $result = $this->createValidator($model)->validate($model);
+            $errors = $this->getErrorsFromValidationResult($result);
+            if (!empty($errors)) {
+                throw new RequestValidationException($errors);
+            }
         }
 
         return $model;
@@ -87,16 +91,6 @@ final class RequestModelFactory
             'files' => $request->getUploadedFiles(),
             'cookie' => $request->getCookieParams(),
         ];
-    }
-
-    private function validateRequest(ValidatableModelInterface $model, array $requestData): void
-    {
-        $requestDataSet = new RequestDataSet($requestData);
-        $result = $this->createValidator($model)->validate($requestDataSet);
-        $errors = $this->getErrorsFromValidationResult($result);
-        if (!empty($errors)) {
-            throw new RequestValidationException($errors);
-        }
     }
 
     private function createValidator(ValidatableModelInterface $model): Validator

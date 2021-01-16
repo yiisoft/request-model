@@ -15,14 +15,14 @@ abstract class RequestModel implements RequestModelInterface
         $this->requestData = $requestData;
     }
 
-    public function getValue(string $field, $default = null)
+    public function getAttributeValue(string $field, $default = null)
     {
         return ArrayHelper::getValueByPath($this->requestData, $field, $default);
     }
 
-    public function hasValue(string $field): bool
+    public function hasAttribute(string $field): bool
     {
-        return $this->getValue($field) !== null;
+        return $this->getAttributeValue($field) !== null;
     }
 
     public function getRequestData(): array
