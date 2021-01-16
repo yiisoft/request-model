@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://github.com/yiisoft.png" height="100px">
+        <img src="https://yiisoft.github.io/docs/images/yii_logo.svg" height="100px">
     </a>
     <h1 align="center">Yii Request Model</h1>
     <br>
@@ -107,6 +107,32 @@ final class ViewPostRequest extends RequestModel
     }
 }
 ```
+
+Inside the request model class, data is available using the following keys:
+
+| key        | source                       |
+| ---------- | ---------------------------- |
+| query      | $request->getQueryParams()   |
+| body       | $request->getParsedBody()    |
+| attributes | $request->getAttributes()    |
+| headers    | $request->getHeaders()       |
+| files      | $request->getUploadedFiles() |
+| cookie     | $request->getCookieParams()  |
+
+This data can be obtained as follows 
+
+```php
+$this->requestData['attributes.id'];
+```
+
+or through the methods
+
+```php
+$this->hasValue('body.user_id');
+$this->getValue('body.user_id');
+```
+
+
 
 ### Unit testing
 
