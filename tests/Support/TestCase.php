@@ -12,7 +12,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Http\Method;
 use Yiisoft\Injector\Injector;
 use Yiisoft\RequestModel\RequestModelFactory;
-use Yiisoft\RequestModel\RequestModelValidator;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 
 abstract class TestCase extends BaseTestCase
