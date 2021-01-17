@@ -105,7 +105,7 @@ final class RequestModelFactory
          */
         $errors = [];
         foreach ($result->getIterator() as $field => $fieldResult) {
-            if (!empty($fieldResult->getErrors())) {
+            if (!$fieldResult->isValid()) {
                 $errors[$field] = $fieldResult->getErrors();
             }
         }
