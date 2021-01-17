@@ -46,7 +46,7 @@ class RequestValidationExceptionTest extends TestCase
 
     public function testGetEmptyErrors(): void
     {
-        $emptyException = new RequestValidationException([]);
+        $emptyException = new RequestValidationException($this->createGenerator([]));
 
         $this->assertEquals(null, $emptyException->getFirstError());
     }
@@ -54,15 +54,24 @@ class RequestValidationExceptionTest extends TestCase
     private function createException(): RequestValidationException
     {
         return new RequestValidationException(
-            [
-                'sort' => [
-                    'Bad Value',
-                    'Wrong type value',
-                ],
-                'page' => [
-                    'Bad value',
-                ],
-            ]
+            $this->createGenerator(
+                [
+                    'sort' => [
+                        'Bad Value',
+                        'Wrong type value',
+                    ],
+                    'page' => [
+                        'Bad value',
+                    ],
+                ]
+            )
         );
+    }
+
+    private function createGenerator(array $array): \Generator
+    {
+        foreach ($array as $key => $value) {
+            yield $key => $value;
+        }
     }
 }

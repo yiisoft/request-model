@@ -12,6 +12,7 @@ use Yiisoft\Injector\Injector;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\ResultSet;
 use Yiisoft\Validator\Validator;
+use Generator;
 
 final class RequestModelFactory
 {
@@ -26,9 +27,9 @@ final class RequestModelFactory
      * @param ServerRequestInterface $request
      * @param array|ReflectionParameter[] $handlerParams
      *
+     * @return array
      * @throws ReflectionException
      *
-     * @return array
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParams): array
     {
@@ -47,7 +48,7 @@ final class RequestModelFactory
         if ($model instanceof ValidatableModelInterface) {
             $result = $this->createValidator($model)->validate($model);
             $errors = $this->getErrorsFromValidationResult($result);
-            if (!empty($errors)) {
+            if ($errors->valid()) {
                 throw new RequestValidationException($errors);
             }
         }
@@ -98,18 +99,12 @@ final class RequestModelFactory
         return new Validator($model->getRules());
     }
 
-    private function getErrorsFromValidationResult(ResultSet $result): array
+    private function getErrorsFromValidationResult(ResultSet $result): Generator
     {
-        /**
-         * @var $fieldResult Result
-         */
-        $errors = [];
         foreach ($result->getIterator() as $field => $fieldResult) {
             if (!$fieldResult->isValid()) {
-                $errors[$field] = $fieldResult->getErrors();
+                yield $field => $fieldResult->getErrors();
             }
         }
-
-        return $errors;
     }
 }

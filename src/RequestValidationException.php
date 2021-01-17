@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel;
 
 use RuntimeException;
+use Generator;
 
 final class RequestValidationException extends RuntimeException
 {
     private const MESSAGE = 'Request model validation error';
-    private array $errors;
+    private Generator $errors;
 
-    public function __construct(array $errors)
+    public function __construct(Generator $errors)
     {
         $this->errors = $errors;
         parent::__construct(self::MESSAGE);
@@ -19,12 +20,12 @@ final class RequestValidationException extends RuntimeException
 
     public function getErrors(): array
     {
-        return $this->errors;
+        return iterator_to_array($this->errors);
     }
 
     public function getFirstErrors(): ?array
     {
-        return empty($this->errors) ? null : reset($this->errors);
+        return $this->errors->current();
     }
 
     public function getFirstError(): ?string
