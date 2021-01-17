@@ -6,6 +6,7 @@ namespace Yiisoft\RequestModel\Tests;
 
 use Yiisoft\RequestModel\RequestValidationException;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
+use Generator;
 
 class RequestValidationExceptionTest extends TestCase
 {
@@ -68,7 +69,7 @@ class RequestValidationExceptionTest extends TestCase
         );
     }
 
-    private function createGenerator(array $array): \Generator
+    private function createGenerator(array $array): Generator
     {
         foreach ($array as $key => $value) {
             yield $key => $value;
