@@ -9,9 +9,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
-use Yiisoft\Validator\ResultSet;
 use Yiisoft\Validator\Validator;
-use Generator;
 
 final class RequestModelFactory
 {
