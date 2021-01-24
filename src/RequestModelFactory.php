@@ -26,9 +26,9 @@ final class RequestModelFactory
      * @param ServerRequestInterface $request
      * @param array|ReflectionParameter[] $handlerParams
      *
-     * @return array
      * @throws ReflectionException
      *
+     * @return array
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParams): array
     {
