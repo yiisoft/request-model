@@ -14,9 +14,11 @@ use Yiisoft\Validator\Validator;
 final class RequestModelFactory
 {
     private Injector $injector;
+    private Validator $validator;
 
-    public function __construct(Injector $injector)
+    public function __construct(Validator $validator, Injector $injector)
     {
+        $this->validator = $validator;
         $this->injector = $injector;
     }
 
@@ -43,7 +45,7 @@ final class RequestModelFactory
         $requestData = $this->getRequestData($request);
         $model->setRequestData($requestData);
         if ($model instanceof ValidatableModelInterface) {
-            $result = $this->createValidator($model)->validate($model);
+            $result = $this->validator->validate($model, $model->getRules());
             if (!$result->isValid()) {
                 throw new RequestValidationException($result->getErrors());
             }
@@ -88,10 +90,5 @@ final class RequestModelFactory
             'files' => $request->getUploadedFiles(),
             'cookie' => $request->getCookieParams(),
         ];
-    }
-
-    private function createValidator(ValidatableModelInterface $model): Validator
-    {
-        return new Validator($model->getRules());
     }
 }

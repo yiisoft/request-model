@@ -13,6 +13,7 @@ use Yiisoft\Http\Method;
 use Yiisoft\Injector\Injector;
 use Yiisoft\RequestModel\RequestModelFactory;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Validator\Validator;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -43,6 +44,6 @@ abstract class TestCase extends BaseTestCase
 
     public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory
     {
-        return new RequestModelFactory(new Injector($container));
+        return new RequestModelFactory(new Validator(null), new Injector($container));
     }
 }
