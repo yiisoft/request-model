@@ -12,12 +12,12 @@ final class SimpleValidationRequestModel extends RequestModel implements Validat
 {
     public function getLogin(): string
     {
-        return (string)$this->getValue('body.login');
+        return (string)$this->getAttributeValue('body.login');
     }
 
     public function getPassword(): string
     {
-        return (string)$this->getValue('body.password');
+        return (string)$this->getAttributeValue('body.password');
     }
 
     public function getRules(): array

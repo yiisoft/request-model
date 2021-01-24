@@ -12,8 +12,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Http\Method;
 use Yiisoft\Injector\Injector;
 use Yiisoft\RequestModel\RequestModelFactory;
-use Yiisoft\RequestModel\RequestModelValidator;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Validator\Validator;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -44,8 +44,6 @@ abstract class TestCase extends BaseTestCase
 
     public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory
     {
-        $injector = new Injector($container);
-        $validator = new RequestModelValidator();
-        return new RequestModelFactory($validator, $injector);
+        return new RequestModelFactory(new Validator(null), new Injector($container));
     }
 }

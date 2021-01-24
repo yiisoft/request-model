@@ -9,13 +9,14 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
+use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
 {
     private Injector $injector;
-    private RequestModelValidator $validator;
+    private ValidatorInterface $validator;
 
-    public function __construct(RequestModelValidator $validator, Injector $injector)
+    public function __construct(ValidatorInterface $validator, Injector $injector)
     {
         $this->validator = $validator;
         $this->injector = $injector;
@@ -44,7 +45,10 @@ final class RequestModelFactory
         $requestData = $this->getRequestData($request);
         $model->setRequestData($requestData);
         if ($model instanceof ValidatableModelInterface) {
-            $this->validateRequest($model, $requestData);
+            $result = $this->validator->validate($model, $model->getRules());
+            if (!$result->isValid()) {
+                throw new RequestValidationException($result->getErrors());
+            }
         }
 
         return $model;
@@ -86,13 +90,5 @@ final class RequestModelFactory
             'files' => $request->getUploadedFiles(),
             'cookie' => $request->getCookieParams(),
         ];
-    }
-
-    private function validateRequest(ValidatableModelInterface $model, array $requestData): void
-    {
-        $errors = $this->validator->validate($requestData, $model->getRules());
-        if (!empty($errors)) {
-            throw new RequestValidationException($errors);
-        }
     }
 }
