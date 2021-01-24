@@ -6,7 +6,6 @@ namespace Yiisoft\RequestModel\Tests;
 
 use Yiisoft\RequestModel\RequestValidationException;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
-use Generator;
 
 class RequestValidationExceptionTest extends TestCase
 {
@@ -47,7 +46,7 @@ class RequestValidationExceptionTest extends TestCase
 
     public function testGetEmptyErrors(): void
     {
-        $emptyException = new RequestValidationException($this->createGenerator([]));
+        $emptyException = new RequestValidationException([]);
 
         $this->assertEquals(null, $emptyException->getFirstError());
     }
@@ -55,24 +54,15 @@ class RequestValidationExceptionTest extends TestCase
     private function createException(): RequestValidationException
     {
         return new RequestValidationException(
-            $this->createGenerator(
-                [
-                    'sort' => [
-                        'Bad Value',
-                        'Wrong type value',
-                    ],
-                    'page' => [
-                        'Bad value',
-                    ],
-                ]
-            )
+            [
+                'sort' => [
+                    'Bad Value',
+                    'Wrong type value',
+                ],
+                'page' => [
+                    'Bad value',
+                ],
+            ]
         );
-    }
-
-    private function createGenerator(array $array): Generator
-    {
-        foreach ($array as $key => $value) {
-            yield $key => $value;
-        }
     }
 }

@@ -46,9 +46,8 @@ final class RequestModelFactory
         $model->setRequestData($requestData);
         if ($model instanceof ValidatableModelInterface) {
             $result = $this->createValidator($model)->validate($model);
-            $errors = $this->getErrorsFromValidationResult($result);
-            if ($errors->valid()) {
-                throw new RequestValidationException($errors);
+            if (!$result->isValid()) {
+                throw new RequestValidationException($result->getErrors());
             }
         }
 
@@ -96,14 +95,5 @@ final class RequestModelFactory
     private function createValidator(ValidatableModelInterface $model): Validator
     {
         return new Validator($model->getRules());
-    }
-
-    private function getErrorsFromValidationResult(ResultSet $result): Generator
-    {
-        foreach ($result->getIterator() as $field => $fieldResult) {
-            if (!$fieldResult->isValid()) {
-                yield $field => $fieldResult->getErrors();
-            }
-        }
     }
 }
