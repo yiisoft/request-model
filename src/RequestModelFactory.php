@@ -16,7 +16,7 @@ final class RequestModelFactory
     private Injector $injector;
     private Validator $validator;
 
-    public function __construct(Validator $validator, Injector $injector)
+    public function __construct(ValidatorInterface $validator, Injector $injector)
     {
         $this->validator = $validator;
         $this->injector = $injector;
