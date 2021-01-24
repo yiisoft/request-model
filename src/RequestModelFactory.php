@@ -9,12 +9,12 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
-use Yiisoft\Validator\Validator;
+use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
 {
     private Injector $injector;
-    private Validator $validator;
+    private ValidatorInterface $validator;
 
     public function __construct(ValidatorInterface $validator, Injector $injector)
     {
@@ -26,9 +26,9 @@ final class RequestModelFactory
      * @param ServerRequestInterface $request
      * @param array|ReflectionParameter[] $handlerParams
      *
+     * @return array
      * @throws ReflectionException
      *
-     * @return array
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParams): array
     {
