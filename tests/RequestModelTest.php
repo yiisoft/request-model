@@ -14,15 +14,15 @@ class RequestModelTest extends TestCase
         $model = $this->createRequestModel();
 
         $this->assertEquals('login', $model->getLogin());
-        $this->assertEquals('login', $model->getValue('body.login'));
-        $this->assertNull($model->getValue('query.login'));
+        $this->assertEquals('login', $model->getAttributeValue('body.login'));
+        $this->assertNull($model->getAttributeValue('query.login'));
     }
 
     public function testHasValueMethod(): void
     {
         $model = $this->createRequestModel();
-        $this->assertTrue($model->hasValue('body.login'));
-        $this->assertFalse($model->hasValue('query.login'));
+        $this->assertTrue($model->hasAttribute('body.login'));
+        $this->assertFalse($model->hasAttribute('query.login'));
     }
 
     public function testGetRequestDataMethod(): void
