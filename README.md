@@ -39,12 +39,12 @@ final class AuthRequest extends RequestModel implements ValidatableModelInterfac
 {
     public function getLogin(): string
     {
-        return (string)$this->getValue('body.login');
+        return (string)$this->getAttributeValue('body.login');
     }
 
     public function getPassword(): string
     {
-        return (string)$this->getValue('body.password');
+        return (string)$this->getAttributeValue('body.password');
     }
 
     public function getRules(): array
@@ -103,7 +103,7 @@ final class ViewPostRequest extends RequestModel
 {
     public function getId(): int
     {
-        return (int)$this->getValue('attributes.id');
+        return (int)$this->getAttributeValue('attributes.id');
     }
 }
 ```
@@ -128,8 +128,8 @@ $this->requestData['attributes.id'];
 or through the methods
 
 ```php
-$this->hasValue('body.user_id');
-$this->getValue('body.user_id');
+$this->hasAttribute('body.user_id');
+$this->getAttributeValue('body.user_id');
 ```
 
 
