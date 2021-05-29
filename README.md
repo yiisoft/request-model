@@ -51,10 +51,10 @@ final class AuthRequest extends RequestModel implements ValidatableModelInterfac
     {
         return [
             'body.login' => [
-                new Required(),
+                Required::rule(),
             ],
             'body.password' => [
-                new Required(),
+                Required::rule(),
             ]
         ];
     }

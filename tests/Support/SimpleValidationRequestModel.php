@@ -24,10 +24,10 @@ final class SimpleValidationRequestModel extends RequestModel implements Validat
     {
         return [
             'body.login' => [
-                new Required(),
+                Required::rule(),
             ],
             'body.password' => [
-                new Required(),
+                Required::rule(),
             ],
         ];
     }
