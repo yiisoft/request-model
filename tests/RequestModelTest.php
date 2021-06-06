@@ -46,7 +46,7 @@ class RequestModelTest extends TestCase
 
     public function testWithAttributeDelimiterMethod(): void
     {
-        $model = new class extends RequestModel {
+        $model = new class() extends RequestModel {
             public function getPrimaryName(): string
             {
                 return $this->getAttributeValue('body->name.primary');
