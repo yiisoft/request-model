@@ -44,16 +44,12 @@ class RequestModelTest extends TestCase
         );
     }
 
-    public function testWithAttributeDelimiterMethod(): void
+    public function testCustomAttributeDelimiter(): void
     {
         $model = new class() extends RequestModel {
-            public function getPrimaryName(): string
-            {
-                return $this->getAttributeValue('body->name.primary');
-            }
+            protected string $attributeDelimiter = '->';
         };
 
-        $model = $model->withAttributeDelimiter('->');
         $model->setRequestData(
             [
                 'body' => [
@@ -62,7 +58,7 @@ class RequestModelTest extends TestCase
             ],
         );
 
-        $this->assertEquals('mike', $model->getPrimaryName());
+        $this->assertEquals('mike', $model->getAttributeValue('body->name.primary'));
     }
 
     private function createRequestModel(): SimpleRequestModel
