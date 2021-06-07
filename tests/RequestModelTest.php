@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Tests;
 
+use Yiisoft\RequestModel\RequestModel;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
 
@@ -41,6 +42,23 @@ class RequestModelTest extends TestCase
             ],
             $this->createRequestModel()->getRequestData()
         );
+    }
+
+    public function testCustomAttributeDelimiter(): void
+    {
+        $model = new class() extends RequestModel {
+            protected string $attributeDelimiter = '->';
+        };
+
+        $model->setRequestData(
+            [
+                'body' => [
+                    'name.primary' => 'mike',
+                ],
+            ],
+        );
+
+        $this->assertEquals('mike', $model->getAttributeValue('body->name.primary'));
     }
 
     private function createRequestModel(): SimpleRequestModel

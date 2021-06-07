@@ -9,6 +9,7 @@ use Yiisoft\Arrays\ArrayHelper;
 abstract class RequestModel implements RequestModelInterface
 {
     private array $requestData = [];
+    protected string $attributeDelimiter = '.';
 
     public function setRequestData(array $requestData): void
     {
@@ -17,12 +18,12 @@ abstract class RequestModel implements RequestModelInterface
 
     public function getAttributeValue(string $attribute, $default = null)
     {
-        return ArrayHelper::getValueByPath($this->requestData, $attribute, $default);
+        return ArrayHelper::getValueByPath($this->requestData, $attribute, $default, $this->attributeDelimiter);
     }
 
     public function hasAttribute(string $attribute): bool
     {
-        return ArrayHelper::pathExists($this->requestData, $attribute);
+        return ArrayHelper::pathExists($this->requestData, $attribute, true, $this->attributeDelimiter);
     }
 
     public function getRequestData(): array
