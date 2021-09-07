@@ -46,7 +46,7 @@ class RequestModelTest extends TestCase
 
     public function testCustomAttributeDelimiter(): void
     {
-        $model = new class() extends RequestModel {
+        $model = new class () extends RequestModel {
             protected string $attributeDelimiter = '->';
         };
 

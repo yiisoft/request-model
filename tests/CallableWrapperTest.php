@@ -66,7 +66,7 @@ class CallableWrapperTest extends TestCase
 
     public function testCorrectProcessCallableObject(): void
     {
-        $obj = new class() {
+        $obj = new class () {
             public function __invoke(SimpleRequestModel $request)
             {
                 return (new SimpleController())->action($request);
