@@ -12,6 +12,7 @@ final class SimpleRequestModel extends RequestModel
     {
         return (int)$this->getAttributeValue('router.id');
     }
+
     public function getLogin(): string
     {
         return (string)$this->getAttributeValue('body.login');

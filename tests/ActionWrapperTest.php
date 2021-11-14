@@ -61,7 +61,7 @@ class ActionWrapperTest extends TestCase
 
         $this->assertEquals(
             [
-                'id' => [1]
+                'id' => [1],
             ],
             $result->getHeaders()
         );
