@@ -45,6 +45,7 @@ class RequestModelFactoryTest extends TestCase
                 'headers' => [],
                 'files' => [],
                 'cookie' => [],
+                'router' => ['id' => 1],
             ],
             $model->getRequestData()
         );

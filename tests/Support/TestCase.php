@@ -12,6 +12,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Http\Method;
 use Yiisoft\Injector\Injector;
 use Yiisoft\RequestModel\RequestModelFactory;
+use Yiisoft\Router\CurrentRoute;
+use Yiisoft\Router\CurrentRouteInterface;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Validator;
 
@@ -23,6 +25,7 @@ abstract class TestCase extends BaseTestCase
             [
                 SimpleMiddleware::class => new SimpleMiddleware(),
                 SimpleController::class => new SimpleController(),
+                CurrentRouteInterface::class => $this->getCurrentRoute(),
             ]
         );
     }
@@ -44,6 +47,13 @@ abstract class TestCase extends BaseTestCase
 
     public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory
     {
-        return new RequestModelFactory(new Validator(null), new Injector($container));
+        return new RequestModelFactory(new Validator(null), new Injector($container), $this->getCurrentRoute());
+    }
+
+    private function getCurrentRoute(): CurrentRouteInterface
+    {
+        $currentRoute = new CurrentRoute();
+        $currentRoute->setParameters(['id' => 1]);
+        return $currentRoute;
     }
 }

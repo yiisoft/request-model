@@ -38,4 +38,32 @@ class ActionWrapperTest extends TestCase
             $result->getHeaders()
         );
     }
+
+    public function testCorrectProcessRouterParams(): void
+    {
+        $container = $this->createContainer();
+
+        $wrapper = new ActionWrapper(
+            $container,
+            $this->createRequestModelFactory($container),
+            SimpleController::class,
+            'anotherAction'
+        );
+
+        $request = $this->createRequest(
+            [
+                'login' => 'login',
+                'password' => 'password',
+            ]
+        );
+
+        $result = $wrapper->process($request, $this->createRequestHandler());
+
+        $this->assertEquals(
+            [
+                'id' => [1]
+            ],
+            $result->getHeaders()
+        );
+    }
 }

@@ -9,17 +9,20 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
+use Yiisoft\Router\CurrentRouteInterface;
 use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
 {
     private Injector $injector;
     private ValidatorInterface $validator;
+    private CurrentRouteInterface $currentRoute;
 
-    public function __construct(ValidatorInterface $validator, Injector $injector)
+    public function __construct(ValidatorInterface $validator, Injector $injector, CurrentRouteInterface $currentRoute)
     {
         $this->validator = $validator;
         $this->injector = $injector;
+        $this->currentRoute = $currentRoute;
     }
 
     /**
@@ -89,6 +92,7 @@ final class RequestModelFactory
             'headers' => $request->getHeaders(),
             'files' => $request->getUploadedFiles(),
             'cookie' => $request->getCookieParams(),
+            'router' => $this->currentRoute->getParameters(),
         ];
     }
 }
