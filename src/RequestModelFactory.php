@@ -92,7 +92,7 @@ final class RequestModelFactory
             'headers' => $request->getHeaders(),
             'files' => $request->getUploadedFiles(),
             'cookie' => $request->getCookieParams(),
-            'router' => $this->currentRoute->getParameters(),
+            'router' => $this->currentRoute->getArguments(),
         ];
     }
 }

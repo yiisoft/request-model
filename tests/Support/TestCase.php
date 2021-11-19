@@ -53,7 +53,7 @@ abstract class TestCase extends BaseTestCase
     private function getCurrentRoute(): CurrentRouteInterface
     {
         $currentRoute = new CurrentRoute();
-        $currentRoute->setParameters(['id' => 1]);
+        $currentRoute->setArguments(['id' => 1]);
         return $currentRoute;
     }
 }
