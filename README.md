@@ -103,7 +103,7 @@ final class ViewPostRequest extends RequestModel
 {
     public function getId(): int
     {
-        return (int)$this->getAttributeValue('attributes.id');
+        return (int)$this->getAttributeValue('router.id');
     }
 }
 ```
@@ -118,11 +118,12 @@ Inside the request model class, data is available using the following keys:
 | headers    | $request->getHeaders()       |
 | files      | $request->getUploadedFiles() |
 | cookie     | $request->getCookieParams()  |
+| router     | $currentRoute->getArguments() |
 
 This data can be obtained as follows 
 
 ```php
-$this->requestData['attributes.id'];
+$this->requestData['router.id'];
 ```
 
 or through the methods
