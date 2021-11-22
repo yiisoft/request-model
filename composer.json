@@ -35,6 +35,7 @@
         "spatie/phpunit-watcher": "^1.23",
         "vimeo/psalm": "^4.12",
         "yiisoft/http": "^1.2",
+        "yiisoft/router-fastroute": "dev-master",
         "yiisoft/test-support": "^1.3"
     },
     "autoload": {

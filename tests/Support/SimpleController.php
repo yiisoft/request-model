@@ -15,4 +15,11 @@ final class SimpleController
             $request->getPassword(),
         ]);
     }
+
+    public function anotherAction(SimpleRequestModel $request): Response
+    {
+        return new Response(200, [
+            'id' => $request->getId(),
+        ]);
+    }
 }
