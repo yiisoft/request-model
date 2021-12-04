@@ -7,7 +7,6 @@ namespace Yiisoft\RequestModel\Tests\Php8;
 use Nyholm\Psr7\Request;
 use Nyholm\Psr7\ServerRequest;
 use ReflectionFunction;
-use Yiisoft\RequestModel\RequestValidationException;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\SimpleValidationRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;

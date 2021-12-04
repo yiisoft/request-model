@@ -32,9 +32,9 @@ final class RequestModelFactory
      * @param ServerRequestInterface $request
      * @param array|ReflectionParameter[] $handlerParameters
      *
-     * @return array
      * @throws ReflectionException
      *
+     * @return array
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParameters): array
     {
@@ -83,8 +83,9 @@ final class RequestModelFactory
      * @param ReflectionParameter $parameter
      * @param mixed $parameterType
      *
-     * @return bool
      * @throws ReflectionException
+     *
+     * @return bool
      */
     private function paramsIsRequestModel(ReflectionParameter $parameter, &$parameterType): bool
     {
@@ -97,7 +98,7 @@ final class RequestModelFactory
         $types = $reflectionType instanceof ReflectionNamedType ? [$reflectionType] : $reflectionType->getTypes();
 
         /** @var ReflectionNamedType $type */
-        foreach($types as $type) {
+        foreach ($types as $type) {
             if (!$type->isBuiltin() && (new ReflectionClass($type->getName()))->implementsInterface(RequestModelInterface::class)) {
                 $parameterType = $type;
                 return true;

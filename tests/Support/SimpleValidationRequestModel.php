@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Tests\Support;
 
 use Yiisoft\RequestModel\RequestModel;
-use Yiisoft\RequestModel\ValidatableModelInterface;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\RulesProviderInterface;
 
