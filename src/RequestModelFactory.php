@@ -30,7 +30,7 @@ final class RequestModelFactory
 
     /**
      * @param ServerRequestInterface $request
-     * @param array|ReflectionParameter[] $handlerParameters
+     * @param ReflectionParameter[] $handlerParameters
      *
      * @throws ReflectionException
      *
@@ -63,7 +63,7 @@ final class RequestModelFactory
     }
 
     /**
-     * @param array|ReflectionParameter[] $handlerParameters
+     * @param ReflectionParameter[] $handlerParameters
      *
      * @return array
      */
@@ -71,7 +71,8 @@ final class RequestModelFactory
     {
         $modelClasses = [];
         foreach ($handlerParameters as $parameter) {
-            if ($this->paramsIsRequestModel($parameter, $parameterType)) {
+            if ($this->parameterIsRequestModel($parameter, $parameterType)) {
+                /** @var ReflectionNamedType $parameterType */
                 $modelClasses[] = $parameterType->getName();
             }
         }
@@ -81,13 +82,13 @@ final class RequestModelFactory
 
     /**
      * @param ReflectionParameter $parameter
-     * @param mixed $parameterType
+     * @param ReflectionNamedType|ReflectionUnionType $parameterType
      *
      * @throws ReflectionException
      *
      * @return bool
      */
-    private function paramsIsRequestModel(ReflectionParameter $parameter, &$parameterType): bool
+    private function parameterIsRequestModel(ReflectionParameter $parameter, &$parameterType): bool
     {
         if (!$parameter->hasType()) {
             return false;
@@ -95,9 +96,9 @@ final class RequestModelFactory
         /** @var ReflectionNamedType|ReflectionUnionType $reflectionType */
         $reflectionType = $parameter->getType();
 
+        /** @var ReflectionNamedType[] $types */
         $types = $reflectionType instanceof ReflectionNamedType ? [$reflectionType] : $reflectionType->getTypes();
 
-        /** @var ReflectionNamedType $type */
         foreach ($types as $type) {
             if (!$type->isBuiltin() && (new ReflectionClass($type->getName()))->implementsInterface(RequestModelInterface::class)) {
                 $parameterType = $type;
