@@ -7,8 +7,9 @@ namespace Yiisoft\RequestModel\Tests\Support;
 use Yiisoft\RequestModel\RequestModel;
 use Yiisoft\RequestModel\ValidatableModelInterface;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class SimpleValidationRequestModel extends RequestModel implements ValidatableModelInterface
+final class SimpleValidationRequestModel extends RequestModel implements RulesProviderInterface
 {
     public function getLogin(): string
     {
@@ -20,7 +21,7 @@ final class SimpleValidationRequestModel extends RequestModel implements Validat
         return (string)$this->getAttributeValue('body.password');
     }
 
-    public function getRules(): array
+    public function getRules(): iterable
     {
         return [
             'body.login' => [

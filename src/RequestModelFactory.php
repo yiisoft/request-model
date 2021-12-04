@@ -7,9 +7,12 @@ namespace Yiisoft\RequestModel;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionNamedType;
 use ReflectionParameter;
+use ReflectionUnionType;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Router\CurrentRouteInterface;
+use Yiisoft\Validator\RulesProviderInterface;
 use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
@@ -27,17 +30,19 @@ final class RequestModelFactory
 
     /**
      * @param ServerRequestInterface $request
-     * @param array|ReflectionParameter[] $handlerParams
-     *
-     * @throws ReflectionException
+     * @param array|ReflectionParameter[] $handlerParameters
      *
      * @return array
+     * @throws ReflectionException
+     *
      */
-    public function createInstances(ServerRequestInterface $request, array $handlerParams): array
+    public function createInstances(ServerRequestInterface $request, array $handlerParameters): array
     {
         $requestModelInstances = [];
-        foreach ($this->getModelRequestClasses($handlerParams) as $modelClass) {
-            $requestModelInstances[] = $this->processModel($request, $this->injector->make($modelClass));
+        foreach ($this->getModelRequestClasses($handlerParameters) as $modelClass) {
+            /** @var RequestModelInterface $modelInstance */
+            $modelInstance = $this->injector->make($modelClass);
+            $requestModelInstances[] = $this->processModel($request, $modelInstance);
         }
 
         return $requestModelInstances;
@@ -47,7 +52,7 @@ final class RequestModelFactory
     {
         $requestData = $this->getRequestData($request);
         $model->setRequestData($requestData);
-        if ($model instanceof ValidatableModelInterface) {
+        if ($model instanceof RulesProviderInterface) {
             $result = $this->validator->validate($model, $model->getRules());
             if (!$result->isValid()) {
                 throw new RequestValidationException($result->getErrors());
@@ -58,29 +63,47 @@ final class RequestModelFactory
     }
 
     /**
-     * @param array|ReflectionParameter[] $handlerParams
+     * @param array|ReflectionParameter[] $handlerParameters
      *
      * @return array
      */
-    private function getModelRequestClasses(array $handlerParams): array
+    private function getModelRequestClasses(array $handlerParameters): array
     {
         $modelClasses = [];
-        foreach ($handlerParams as $param) {
-            if ($this->paramsIsRequestModel($param)) {
-                $modelClasses[] = $param->getType()->getName();
+        foreach ($handlerParameters as $parameter) {
+            if ($this->paramsIsRequestModel($parameter, $parameterType)) {
+                $modelClasses[] = $parameterType->getName();
             }
         }
 
         return $modelClasses;
     }
 
-    private function paramsIsRequestModel(ReflectionParameter $param): bool
+    /**
+     * @param ReflectionParameter $parameter
+     * @param mixed $parameterType
+     *
+     * @return bool
+     * @throws ReflectionException
+     */
+    private function paramsIsRequestModel(ReflectionParameter $parameter, &$parameterType): bool
     {
-        if (!$param->hasType() || $param->getType()->isBuiltin()) {
+        if (!$parameter->hasType()) {
             return false;
         }
+        /** @var ReflectionNamedType|ReflectionUnionType $reflectionType */
+        $reflectionType = $parameter->getType();
 
-        return (new ReflectionClass($param->getType()->getName()))->implementsInterface(RequestModelInterface::class);
+        $types = $reflectionType instanceof ReflectionNamedType ? [$reflectionType] : $reflectionType->getTypes();
+
+        /** @var ReflectionNamedType $type */
+        foreach($types as $type) {
+            if (!$type->isBuiltin() && (new ReflectionClass($type->getName()))->implementsInterface(RequestModelInterface::class)) {
+                $parameterType = $type;
+                return true;
+            }
+        }
+        return false;
     }
 
     private function getRequestData(ServerRequestInterface $request): array

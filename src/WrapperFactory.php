@@ -23,6 +23,9 @@ final class WrapperFactory
         return new CallableWrapper($this->container, $this->requestModelFactory, $callback);
     }
 
+    /**
+     * @psalm-param class-string $class
+     */
     public function createActionWrapper(string $class, string $method): MiddlewareInterface
     {
         return new ActionWrapper($this->container, $this->requestModelFactory, $class, $method);

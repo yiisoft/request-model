@@ -14,11 +14,17 @@ use Yiisoft\Injector\Injector;
 
 final class ActionWrapper implements MiddlewareInterface
 {
+    /**
+     * @psalm-var class-string
+     */
     private string $class;
     private string $method;
     private ContainerInterface $container;
     private RequestModelFactory $factory;
 
+    /**
+     * @psalm-param class-string $class
+     */
     public function __construct(ContainerInterface $container, RequestModelFactory $factory, string $class, string $method)
     {
         $this->container = $container;

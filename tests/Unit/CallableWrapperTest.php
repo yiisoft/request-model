@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\RequestModel\Tests;
+namespace Yiisoft\RequestModel\Tests\Unit;
 
 use Nyholm\Psr7\Response;
 use Yiisoft\RequestModel\CallableWrapper;

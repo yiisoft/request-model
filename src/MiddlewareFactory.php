@@ -61,6 +61,11 @@ final class MiddlewareFactory implements MiddlewareFactoryInterface
         throw new InvalidArgumentException('Parameter should be either PSR middleware class name or a callable.');
     }
 
+    /**
+     * @param array|callable|string $definition
+     *
+     * @return bool
+     */
     private function isCallable($definition): bool
     {
         if (is_callable($definition)) {

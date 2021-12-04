@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\RequestModel\Tests;
+namespace Yiisoft\RequestModel\Tests\Unit;
 
 use Yiisoft\RequestModel\RequestValidationException;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
