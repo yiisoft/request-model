@@ -9,6 +9,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionNamedType;
 use ReflectionParameter;
+use ReflectionType;
 use ReflectionUnionType;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Router\CurrentRouteInterface;
@@ -32,17 +33,14 @@ final class RequestModelFactory
      * @param ServerRequestInterface $request
      * @param ReflectionParameter[] $handlerParameters
      *
-     * @throws ReflectionException
-     *
      * @return array
+     * @throws ReflectionException
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParameters): array
     {
         $requestModelInstances = [];
         foreach ($this->getModelRequestClasses($handlerParameters) as $modelClass) {
-            /** @var RequestModelInterface $modelInstance */
-            $modelInstance = $this->injector->make($modelClass);
-            $requestModelInstances[] = $this->processModel($request, $modelInstance);
+            $requestModelInstances[] = $this->processModel($request, $this->injector->make($modelClass));
         }
 
         return $requestModelInstances;
@@ -65,7 +63,8 @@ final class RequestModelFactory
     /**
      * @param ReflectionParameter[] $handlerParameters
      *
-     * @return array
+     * @return class-string<RequestModelInterface>[]
+     * @throws ReflectionException
      */
     private function getModelRequestClasses(array $handlerParameters): array
     {
@@ -73,7 +72,9 @@ final class RequestModelFactory
         foreach ($handlerParameters as $parameter) {
             if ($this->parameterIsRequestModel($parameter, $parameterType)) {
                 /** @var ReflectionNamedType $parameterType */
-                $modelClasses[] = $parameterType->getName();
+                $parameterName = $parameterType->getName();
+                /** @var class-string<RequestModelInterface> $parameterName */
+                $modelClasses[] = $parameterName;
             }
         }
 
@@ -82,14 +83,15 @@ final class RequestModelFactory
 
     /**
      * @param ReflectionParameter $parameter
-     * @param ReflectionNamedType|ReflectionUnionType $parameterType
-     *
-     * @throws ReflectionException
+     * @param ReflectionType $parameterType
      *
      * @return bool
+     * @throws ReflectionException
      */
-    private function parameterIsRequestModel(ReflectionParameter $parameter, &$parameterType): bool
-    {
+    private function parameterIsRequestModel(
+        ReflectionParameter $parameter,
+        ReflectionType &$parameterType = null
+    ): bool {
         if (!$parameter->hasType()) {
             return false;
         }
@@ -100,7 +102,10 @@ final class RequestModelFactory
         $types = $reflectionType instanceof ReflectionNamedType ? [$reflectionType] : $reflectionType->getTypes();
 
         foreach ($types as $type) {
-            if (!$type->isBuiltin() && (new ReflectionClass($type->getName()))->implementsInterface(RequestModelInterface::class)) {
+            if (
+                !$type->isBuiltin()
+                && (new ReflectionClass($type->getName()))->implementsInterface(RequestModelInterface::class)
+            ) {
                 $parameterType = $type;
                 return true;
             }
