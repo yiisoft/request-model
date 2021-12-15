@@ -33,8 +33,9 @@ final class RequestModelFactory
      * @param ServerRequestInterface $request
      * @param ReflectionParameter[] $handlerParameters
      *
-     * @return array
      * @throws ReflectionException
+     *
+     * @return array
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParameters): array
     {
@@ -63,8 +64,9 @@ final class RequestModelFactory
     /**
      * @param ReflectionParameter[] $handlerParameters
      *
-     * @return class-string<RequestModelInterface>[]
      * @throws ReflectionException
+     *
+     * @return class-string<RequestModelInterface>[]
      */
     private function getModelRequestClasses(array $handlerParameters): array
     {
@@ -87,8 +89,9 @@ final class RequestModelFactory
      *
      * @psalm-suppress UndefinedClass
      *
-     * @return bool
      * @throws ReflectionException
+     *
+     * @return bool
      */
     private function parameterIsRequestModel(
         ReflectionParameter $parameter,
