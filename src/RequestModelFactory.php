@@ -85,6 +85,8 @@ final class RequestModelFactory
      * @param ReflectionParameter $parameter
      * @param ReflectionType $parameterType
      *
+     * @psalm-suppress UndefinedClass
+     *
      * @return bool
      * @throws ReflectionException
      */
