@@ -66,7 +66,9 @@ final class RequestModelFactory
      *
      * @throws ReflectionException
      *
-     * @return class-string<RequestModelInterface>[]
+     * @psalm-return class-string<RequestModelInterface>[]
+     *
+     * @return string[]
      */
     private function getModelRequestClasses(array $handlerParameters): array
     {
