@@ -13,6 +13,7 @@ use Yiisoft\Http\Method;
 use Yiisoft\Injector\Injector;
 use Yiisoft\RequestModel\RequestModelFactory;
 use Yiisoft\Router\CurrentRoute;
+use Yiisoft\Router\Route;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Validator;
 
@@ -52,7 +53,7 @@ abstract class TestCase extends BaseTestCase
     private function getCurrentRoute(): CurrentRoute
     {
         $currentRoute = new CurrentRoute();
-        $currentRoute->setArguments(['id' => 1]);
+        $currentRoute->setRouteWithArguments(Route::get('/'), ['id' => 1]);
         return $currentRoute;
     }
 }
