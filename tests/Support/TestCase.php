@@ -13,7 +13,7 @@ use Yiisoft\Http\Method;
 use Yiisoft\Injector\Injector;
 use Yiisoft\RequestModel\RequestModelFactory;
 use Yiisoft\Router\CurrentRoute;
-use Yiisoft\Router\CurrentRouteInterface;
+use Yiisoft\Router\Route;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Validator;
 
@@ -25,7 +25,7 @@ abstract class TestCase extends BaseTestCase
             [
                 SimpleMiddleware::class => new SimpleMiddleware(),
                 SimpleController::class => new SimpleController(),
-                CurrentRouteInterface::class => $this->getCurrentRoute(),
+                CurrentRoute::class => $this->getCurrentRoute(),
             ]
         );
     }
@@ -50,10 +50,10 @@ abstract class TestCase extends BaseTestCase
         return new RequestModelFactory(new Validator(null), new Injector($container), $this->getCurrentRoute());
     }
 
-    private function getCurrentRoute(): CurrentRouteInterface
+    private function getCurrentRoute(): CurrentRoute
     {
         $currentRoute = new CurrentRoute();
-        $currentRoute->setArguments(['id' => 1]);
+        $currentRoute->setRouteWithArguments(Route::get('/'), ['id' => 1]);
         return $currentRoute;
     }
 }

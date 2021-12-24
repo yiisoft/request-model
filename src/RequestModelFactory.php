@@ -12,17 +12,16 @@ use ReflectionParameter;
 use ReflectionType;
 use ReflectionUnionType;
 use Yiisoft\Injector\Injector;
-use Yiisoft\Router\CurrentRouteInterface;
-use Yiisoft\Validator\RulesProviderInterface;
+use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
 {
     private Injector $injector;
     private ValidatorInterface $validator;
-    private CurrentRouteInterface $currentRoute;
+    private CurrentRoute $currentRoute;
 
-    public function __construct(ValidatorInterface $validator, Injector $injector, CurrentRouteInterface $currentRoute)
+    public function __construct(ValidatorInterface $validator, Injector $injector, CurrentRoute $currentRoute)
     {
         $this->validator = $validator;
         $this->injector = $injector;
