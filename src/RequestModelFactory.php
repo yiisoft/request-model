@@ -9,16 +9,16 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
-use Yiisoft\Router\CurrentRouteInterface;
+use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
 {
     private Injector $injector;
     private ValidatorInterface $validator;
-    private CurrentRouteInterface $currentRoute;
+    private CurrentRoute $currentRoute;
 
-    public function __construct(ValidatorInterface $validator, Injector $injector, CurrentRouteInterface $currentRoute)
+    public function __construct(ValidatorInterface $validator, Injector $injector, CurrentRoute $currentRoute)
     {
         $this->validator = $validator;
         $this->injector = $injector;
