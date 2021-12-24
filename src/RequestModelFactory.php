@@ -13,6 +13,7 @@ use ReflectionType;
 use ReflectionUnionType;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Router\CurrentRoute;
+use Yiisoft\Validator\RulesProviderInterface;
 use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
