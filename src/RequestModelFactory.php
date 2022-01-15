@@ -10,6 +10,7 @@ use ReflectionException;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Router\CurrentRoute;
+use Yiisoft\Validator\RulesProviderInterface;
 use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
@@ -47,7 +48,7 @@ final class RequestModelFactory
     {
         $requestData = $this->getRequestData($request);
         $model->setRequestData($requestData);
-        if ($model instanceof ValidatableModelInterface) {
+        if ($model instanceof RulesProviderInterface) {
             $result = $this->validator->validate($model, $model->getRules());
             if (!$result->isValid()) {
                 throw new RequestValidationException($result->getErrors());
