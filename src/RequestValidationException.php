@@ -9,6 +9,9 @@ use RuntimeException;
 final class RequestValidationException extends RuntimeException
 {
     private const MESSAGE = 'Request model validation error';
+    /**
+     * @psalm-var array<string, non-empty-list<string> $errors
+     */
     private array $errors;
 
     /**
@@ -27,7 +30,7 @@ final class RequestValidationException extends RuntimeException
 
     public function getFirstErrors(): array
     {
-        return empty($this->errors) ? [] : [reset($this->errors)];
+        return empty($this->errors) ? [] : reset($this->errors);
     }
 
     public function getFirstError(): ?string
