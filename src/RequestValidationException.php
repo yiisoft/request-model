@@ -11,6 +11,9 @@ final class RequestValidationException extends RuntimeException
     private const MESSAGE = 'Request model validation error';
     private array $errors;
 
+    /**
+     * @param string[] $errors
+     */
     public function __construct(array $errors)
     {
         $this->errors = $errors;
