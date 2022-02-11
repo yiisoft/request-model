@@ -9,8 +9,14 @@ use RuntimeException;
 final class RequestValidationException extends RuntimeException
 {
     private const MESSAGE = 'Request model validation error';
+    /**
+     * @psalm-var array<string, non-empty-list<string> $errors
+     */
     private array $errors;
 
+    /**
+     * @param string[] $errors
+     */
     public function __construct(array $errors)
     {
         $this->errors = $errors;
@@ -22,15 +28,15 @@ final class RequestValidationException extends RuntimeException
         return $this->errors;
     }
 
-    public function getFirstErrors(): ?array
+    public function getFirstErrors(): array
     {
-        return empty($this->errors) ? null : reset($this->errors);
+        return empty($this->errors) ? [] : reset($this->errors);
     }
 
     public function getFirstError(): ?string
     {
         $errors = $this->getFirstErrors();
 
-        return null === $errors ? null : reset($errors);
+        return $errors === [] ? null : reset($errors);
     }
 }

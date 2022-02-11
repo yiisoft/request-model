@@ -7,6 +7,7 @@ namespace Yiisoft\RequestModel;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionNamedType;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Router\CurrentRoute;
@@ -51,7 +52,7 @@ final class RequestModelFactory
         if ($model instanceof RulesProviderInterface) {
             $result = $this->validator->validate($model, $model->getRules());
             if (!$result->isValid()) {
-                throw new RequestValidationException($result->getErrors());
+                throw new RequestValidationException($result->getErrorMessages());
             }
         }
 
@@ -67,9 +68,13 @@ final class RequestModelFactory
     {
         $modelClasses = [];
         foreach ($handlerParams as $param) {
-            if ($this->paramsIsRequestModel($param)) {
-                $modelClasses[] = $param->getType()->getName();
+            if (!$this->paramsIsRequestModel($param)) {
+                continue;
             }
+
+            /** @var ReflectionNamedType $type */
+            $type = $param->getType();
+            $modelClasses[] = $type->getName();
         }
 
         return $modelClasses;
@@ -81,7 +86,10 @@ final class RequestModelFactory
             return false;
         }
 
-        return (new ReflectionClass($param->getType()->getName()))->implementsInterface(RequestModelInterface::class);
+        /** @var ReflectionNamedType $type */
+        $type = $param->getType();
+
+        return (new ReflectionClass($type->getName()))->implementsInterface(RequestModelInterface::class);
     }
 
     private function getRequestData(ServerRequestInterface $request): array
