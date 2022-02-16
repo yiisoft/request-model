@@ -30,7 +30,18 @@ final class RequestValidationException extends RuntimeException
 
     public function getFirstErrors(): array
     {
-        return empty($this->errors) ? [] : reset($this->errors);
+        if (empty($this->errors)) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($this->errors as $name => $errors) {
+            if (!empty($errors)) {
+                $result[$name] = reset($errors);
+            }
+        }
+
+        return $result;
     }
 
     public function getFirstError(): ?string
