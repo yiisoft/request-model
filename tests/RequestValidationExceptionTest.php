@@ -29,8 +29,8 @@ class RequestValidationExceptionTest extends TestCase
     {
         $this->assertEquals(
             [
-                'Bad Value',
-                'Wrong type value',
+                'sort' => 'Bad Value',
+                'page' => 'Bad value',
             ],
             $this->createException()->getFirstErrors()
         );
