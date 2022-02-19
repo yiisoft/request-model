@@ -52,7 +52,7 @@ final class RequestModelFactory
         if ($model instanceof RulesProviderInterface) {
             $result = $this->validator->validate($model, $model->getRules());
             if (!$result->isValid()) {
-                throw new RequestValidationException($result->getErrorMessages());
+                throw new RequestValidationException($result->getErrorMessagesIndexedByAttribute());
             }
         }
 
