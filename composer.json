@@ -27,7 +27,7 @@
         "yiisoft/arrays": "^2.0",
         "yiisoft/injector": "^1.0",
         "yiisoft/middleware-dispatcher": "^2.0",
-        "yiisoft/validator": "dev-77-php-attributes"
+        "yiisoft/validator": "^3.0@dev"
     },
     "require-dev": {
         "nyholm/psr7": "^1.4",
