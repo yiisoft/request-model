@@ -82,12 +82,15 @@ final class RequestModelFactory
 
     private function paramsIsRequestModel(ReflectionParameter $param): bool
     {
-        if (!$param->hasType() || $param->getType()->isBuiltin()) {
+        if (!$param->hasType()) {
             return false;
         }
 
         /** @var ReflectionNamedType $type */
         $type = $param->getType();
+        if ($type->isBuiltin()) {
+            return false;
+        }
 
         return (new ReflectionClass($type->getName()))->implementsInterface(RequestModelInterface::class);
     }

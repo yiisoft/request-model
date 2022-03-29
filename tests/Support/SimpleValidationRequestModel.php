@@ -24,10 +24,10 @@ final class SimpleValidationRequestModel extends RequestModel implements RulesPr
     {
         return [
             'body.login' => [
-                Required::rule(),
+                new Required(),
             ],
             'body.password' => [
-                Required::rule(),
+                new Required(),
             ],
         ];
     }

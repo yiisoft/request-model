@@ -33,8 +33,8 @@ A simple version of the request model looks like the following:
 ```php
 use Yiisoft\RequestModel\RequestModel;
 use Yiisoft\Validator\RulesProviderInterface;
-use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\Email;
+use Yiisoft\Validator\Rule\Required;
 
 final class AuthRequest extends RequestModel implements RulesProviderInterface
 {
@@ -52,11 +52,11 @@ final class AuthRequest extends RequestModel implements RulesProviderInterface
     {
         return [
             'body.login' => [
-                Required::rule(),
-                Email::rule(),
+                new Required(),
+                new Email(),
             ],
             'body.password' => [
-                Required::rule(),
+                new Required(),
             ]
         ];
     }
