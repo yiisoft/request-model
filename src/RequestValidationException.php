@@ -46,7 +46,7 @@ final class RequestValidationException extends RuntimeException
         $result = [];
         foreach ($this->errors as $name => $errors) {
             if (!empty($errors)) {
-                $result[$name] = reset($errors);
+                $result[$name] = is_array($errors) ? reset($errors) : $errors;
             }
         }
 
