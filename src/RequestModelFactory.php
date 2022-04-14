@@ -55,7 +55,7 @@ final class RequestModelFactory
                 $errors = $result->getErrors();
                 $errorMessagesIndexedByAttribute = [];
                 foreach ($errors as $error) {
-                    $errorMessagesIndexedByAttribute[(string)$error->getAttribute()] = $error->getMessage();
+                    $errorMessagesIndexedByAttribute[(string)$error->getAttribute()][] = $error->getMessage();
                 }
                 throw new RequestValidationException($errorMessagesIndexedByAttribute);
             }
