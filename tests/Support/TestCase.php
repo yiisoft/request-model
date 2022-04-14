@@ -15,6 +15,7 @@ use Yiisoft\RequestModel\RequestModelFactory;
 use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Router\Route;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Validator\Rule\Required\RequiredValidator;
 use Yiisoft\Validator\Validator;
 
 abstract class TestCase extends BaseTestCase
@@ -26,6 +27,7 @@ abstract class TestCase extends BaseTestCase
                 SimpleMiddleware::class => new SimpleMiddleware(),
                 SimpleController::class => new SimpleController(),
                 CurrentRoute::class => $this->getCurrentRoute(),
+                RequiredValidator::class => new RequiredValidator(),
             ]
         );
     }
@@ -47,7 +49,7 @@ abstract class TestCase extends BaseTestCase
 
     public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory
     {
-        return new RequestModelFactory(new Validator(null), new Injector($container), $this->getCurrentRoute());
+        return new RequestModelFactory(new Validator($container), new Injector($container), $this->getCurrentRoute());
     }
 
     private function getCurrentRoute(): CurrentRoute
