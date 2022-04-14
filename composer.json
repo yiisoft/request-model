@@ -27,7 +27,7 @@
         "yiisoft/arrays": "^2.0",
         "yiisoft/injector": "^1.0",
         "yiisoft/middleware-dispatcher": "^2.0",
-        "yiisoft/validator": "^3.0@dev"
+        "yiisoft/validator": "dev-refactoring-v2"
     },
     "require-dev": {
         "nyholm/psr7": "^1.4",
