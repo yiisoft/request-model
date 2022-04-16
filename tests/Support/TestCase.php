@@ -16,7 +16,7 @@ use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Router\Route;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Rule\Required\RequiredHandler;
-use Yiisoft\Validator\Tests\Stub\StaticRuleHandlerResolver;
+use Yiisoft\Validator\StaticRuleHandlerResolver;
 use Yiisoft\Validator\Validator;
 
 abstract class TestCase extends BaseTestCase
