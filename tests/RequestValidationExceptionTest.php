@@ -21,7 +21,9 @@ class RequestValidationExceptionTest extends TestCase
                     'Bad value',
                 ],
             ],
-            $this->createException()->getErrors()
+            $this
+                ->createException()
+                ->getErrors()
         );
     }
 
@@ -32,7 +34,9 @@ class RequestValidationExceptionTest extends TestCase
                 'sort' => 'Bad Value',
                 'page' => 'Bad value',
             ],
-            $this->createException()->getFirstErrors()
+            $this
+                ->createException()
+                ->getFirstErrors()
         );
     }
 
@@ -40,7 +44,9 @@ class RequestValidationExceptionTest extends TestCase
     {
         $this->assertEquals(
             'Bad Value',
-            $this->createException()->getFirstError()
+            $this
+                ->createException()
+                ->getFirstError()
         );
     }
 
