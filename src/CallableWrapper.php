@@ -43,7 +43,9 @@ final class CallableWrapper implements MiddlewareInterface
 
     private function getHandlerParams(): array
     {
-        return $this->getReflector()->getParameters();
+        return $this
+            ->getReflector()
+            ->getParameters();
     }
 
     /**

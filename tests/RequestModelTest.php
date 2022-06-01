@@ -40,7 +40,9 @@ class RequestModelTest extends TestCase
                 'files' => [],
                 'cookie' => [],
             ],
-            $this->createRequestModel()->getRequestData()
+            $this
+                ->createRequestModel()
+                ->getRequestData()
         );
     }
 

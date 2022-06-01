@@ -16,26 +16,34 @@ class MiddlewareFactoryTest extends TestCase
 {
     public function testCreateFromString(): void
     {
-        $middleware = $this->createMiddlewareFactory()->create(SimpleMiddleware::class);
+        $middleware = $this
+            ->createMiddlewareFactory()
+            ->create(SimpleMiddleware::class);
         $this->assertInstanceOf(SimpleMiddleware::class, $middleware);
     }
 
     public function testCreateFromArray(): void
     {
-        $middleware = $this->createMiddlewareFactory()->create([SimpleController::class, 'action']);
+        $middleware = $this
+            ->createMiddlewareFactory()
+            ->create([SimpleController::class, 'action']);
         $this->assertInstanceOf(ActionWrapper::class, $middleware);
     }
 
     public function testCreateFromCallable(): void
     {
-        $middleware = $this->createMiddlewareFactory()->create(fn () => '');
+        $middleware = $this
+            ->createMiddlewareFactory()
+            ->create(fn () => '');
         $this->assertInstanceOf(CallableWrapper::class, $middleware);
     }
 
     public function testInvalidMiddleware(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->createMiddlewareFactory()->create(new \stdClass());
+        $this
+            ->createMiddlewareFactory()
+            ->create(new \stdClass());
     }
 
     private function createMiddlewareFactory(): MiddlewareFactory

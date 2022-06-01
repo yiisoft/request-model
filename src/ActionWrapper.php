@@ -36,6 +36,8 @@ final class ActionWrapper implements MiddlewareInterface
 
     private function getHandlerParams(): array
     {
-        return (new ReflectionClass($this->class))->getMethod($this->method)->getParameters();
+        return (new ReflectionClass($this->class))
+            ->getMethod($this->method)
+            ->getParameters();
     }
 }
