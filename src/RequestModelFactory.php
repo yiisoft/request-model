@@ -50,9 +50,10 @@ final class RequestModelFactory
         $requestData = $this->getRequestData($request);
         $model->setRequestData($requestData);
         if ($model instanceof RulesProviderInterface) {
-            $result = $this->validator->validate($model, $model->getRules());
+            $result = $this->validator->validate($model);
             if (!$result->isValid()) {
-                throw new RequestValidationException($result->getErrorMessagesIndexedByAttribute());
+                $errorMessagesIndexedByAttribute = $result->getErrorMessagesIndexedByAttribute();
+                throw new RequestValidationException($errorMessagesIndexedByAttribute);
             }
         }
 

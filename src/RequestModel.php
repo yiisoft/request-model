@@ -30,4 +30,9 @@ abstract class RequestModel implements RequestModelInterface
     {
         return $this->requestData;
     }
+
+    public function getData(): array
+    {
+        return $this->requestData;
+    }
 }
