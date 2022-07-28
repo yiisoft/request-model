@@ -9,6 +9,10 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Yiisoft\Middleware\Dispatcher\MiddlewareFactoryInterface;
 
+use function get_debug_type;
+use function is_scalar;
+use function var_export;
+
 final class MiddlewareFactory implements MiddlewareFactoryInterface
 {
     private ContainerInterface $container;
@@ -58,7 +62,12 @@ final class MiddlewareFactory implements MiddlewareFactoryInterface
             return;
         }
 
-        throw new InvalidArgumentException('Parameter should be either PSR middleware class name or a callable.');
+        throw new InvalidArgumentException(
+            sprintf(
+                'Parameter should be either PSR middleware class name or a callable, "%s" given.',
+                is_scalar($middlewareDefinition) ? var_export($middlewareDefinition, true) : get_debug_type($middlewareDefinition),
+            )
+        );
     }
 
     private function isCallable($definition): bool
