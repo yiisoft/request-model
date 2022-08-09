@@ -34,6 +34,7 @@ final class ActionWrapper implements MiddlewareInterface
 
     /**
      * @throws \ReflectionException
+     *
      * @return \ReflectionParameter[]
      */
     private function getHandlerParameters(): array
