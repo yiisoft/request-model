@@ -11,6 +11,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Http\Method;
 use Yiisoft\Injector\Injector;
+use Yiisoft\RequestModel\HandlerParametersResolver;
 use Yiisoft\RequestModel\RequestModelFactory;
 use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Router\Route;
@@ -50,6 +51,11 @@ abstract class TestCase extends BaseTestCase
     {
         $validator = new Validator(new SimpleRuleHandlerContainer());
         return new RequestModelFactory($validator, new Injector($container), $this->getCurrentRoute());
+    }
+
+    public function createParametersResolver(ContainerInterface $container): HandlerParametersResolver
+    {
+        return new HandlerParametersResolver($this->createRequestModelFactory($container), $this->getCurrentRoute());
     }
 
     private function getCurrentRoute(): CurrentRoute

@@ -30,7 +30,7 @@ class WrapperFactoryTest extends TestCase
     private function createWrapperFactory(): WrapperFactory
     {
         $container = $this->createContainer();
-        $requestModelFactory = $this->createRequestModelFactory($container);
-        return new WrapperFactory($container, $requestModelFactory);
+        $parametersResolver = $this->createParametersResolver($container);
+        return new WrapperFactory($container, $parametersResolver);
     }
 }

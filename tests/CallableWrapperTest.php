@@ -104,8 +104,8 @@ class CallableWrapperTest extends TestCase
     private function createWrapper(callable $callback): CallableWrapper
     {
         $container = $this->createContainer();
-        $requestModelFactory = $this->createRequestModelFactory($container);
+        $parametersResolver = $this->createParametersResolver($container);
 
-        return new CallableWrapper($container, $requestModelFactory, $callback);
+        return new CallableWrapper($container, $parametersResolver, $callback);
     }
 }

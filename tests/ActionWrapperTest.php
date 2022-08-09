@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Tests;
 
 use Yiisoft\RequestModel\ActionWrapper;
+use Yiisoft\RequestModel\HandlerParametersResolver;
 use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
 
@@ -16,7 +17,7 @@ class ActionWrapperTest extends TestCase
 
         $wrapper = new ActionWrapper(
             $container,
-            $this->createRequestModelFactory($container),
+            $this->createParametersResolver($container),
             SimpleController::class,
             'action'
         );
@@ -45,7 +46,7 @@ class ActionWrapperTest extends TestCase
 
         $wrapper = new ActionWrapper(
             $container,
-            $this->createRequestModelFactory($container),
+            $this->createParametersResolver($container),
             SimpleController::class,
             'anotherAction'
         );

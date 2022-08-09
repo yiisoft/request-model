@@ -14,27 +14,29 @@ use Yiisoft\Injector\Injector;
 
 final class ActionWrapper implements MiddlewareInterface
 {
-    private string $class;
-    private string $method;
-    private ContainerInterface $container;
-    private RequestModelFactory $factory;
-
-    public function __construct(ContainerInterface $container, RequestModelFactory $factory, string $class, string $method)
-    {
-        $this->container = $container;
-        $this->factory = $factory;
-        $this->class = $class;
-        $this->method = $method;
+    public function __construct(
+        private ContainerInterface $container,
+        private HandlerParametersResolver $parametersResolver,
+        private string $class,
+        private string $method
+    ) {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $controller = $this->container->get($this->class);
-        $params = array_merge([$request, $handler], $this->factory->createInstances($request, $this->getHandlerParams()));
-        return (new Injector($this->container))->invoke([$controller, $this->method], $params);
+        $parameters = array_merge(
+            [$request, $handler],
+            $this->parametersResolver->resolve($this->getHandlerParameters(), $request),
+        );
+        return (new Injector($this->container))->invoke([$controller, $this->method], $parameters);
     }
 
-    private function getHandlerParams(): array
+    /**
+     * @throws \ReflectionException
+     * @return \ReflectionParameter[]
+     */
+    private function getHandlerParameters(): array
     {
         return (new ReflectionClass($this->class))
             ->getMethod($this->method)
