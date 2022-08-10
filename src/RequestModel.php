@@ -16,7 +16,7 @@ abstract class RequestModel implements RequestModelInterface
         $this->requestData = $requestData;
     }
 
-    public function getAttributeValue(string $attribute, $default = null)
+    public function getAttributeValue(string $attribute, $default = null): mixed
     {
         return ArrayHelper::getValueByPath($this->requestData, $attribute, $default, $this->attributeDelimiter);
     }
