@@ -7,7 +7,7 @@ namespace Yiisoft\RequestModel\Attribute;
 use Attribute;
 
 #[Attribute(flags: Attribute::TARGET_PARAMETER)]
-final class UploadedFiles implements HandlerParameterInterface
+final class UploadedFiles implements HandlerParameterAttributeInterface
 {
     public function getType(): string
     {

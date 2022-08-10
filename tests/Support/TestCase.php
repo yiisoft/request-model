@@ -61,7 +61,7 @@ abstract class TestCase extends BaseTestCase
     private function getCurrentRoute(): CurrentRoute
     {
         $currentRoute = new CurrentRoute();
-        $currentRoute->setRouteWithArguments(Route::get('/'), ['id' => 1]);
+        $currentRoute->setRouteWithArguments(Route::get('/'), ['id' => '1']);
         return $currentRoute;
     }
 }

@@ -6,8 +6,8 @@ namespace Yiisoft\RequestModel\Attribute;
 
 use Attribute;
 
-#[Attribute(flags: Attribute::TARGET_PARAMETER)]
-final class QueryParam implements HandlerParameterInterface
+#[Attribute(flags: Attribute::TARGET_PARAMETER | Attribute::IS_REPEATABLE)]
+final class QueryParam implements HandlerParameterAttributeInterface
 {
     public function __construct(private string $name)
     {
