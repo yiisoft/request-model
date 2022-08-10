@@ -60,7 +60,7 @@ class CallableWrapperTest extends TestCase
             [
                 'id' => [1],
                 'body' => ['test'],
-                'foo' => ['bar']
+                'foo' => ['bar'],
             ],
             $result->getHeaders()
         );

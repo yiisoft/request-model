@@ -36,7 +36,7 @@ final class SimpleController
         return new Response(200, [
             'id' => $id,
             'body' => $body,
-            'countFiles' => count($files)
+            'countFiles' => count($files),
         ]);
     }
 

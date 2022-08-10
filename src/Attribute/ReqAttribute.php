@@ -6,9 +6,6 @@ namespace Yiisoft\RequestModel\Attribute;
 
 use Attribute;
 
-/**
- *
- */
 #[Attribute(flags: Attribute::TARGET_PARAMETER | Attribute::IS_REPEATABLE)]
 final class ReqAttribute implements HandlerParameterAttributeInterface
 {
