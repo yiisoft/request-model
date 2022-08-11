@@ -23,7 +23,7 @@ validate it when needed.
 The package could be installed with composer:
 
 ```
-composer require yiisoft/request-model
+composer require yiisoft/request-model --prefer-dist
 ```
 
 ## General usage
@@ -112,20 +112,20 @@ final class ViewPostRequest extends RequestModel
 
 Inside the request model class, data is available using the following keys:
 
-| key        | source                       |
-| ---------- | ---------------------------- |
-| query      | $request->getQueryParams()   |
-| body       | $request->getParsedBody()    |
-| attributes | $request->getAttributes()    |
-| headers    | $request->getHeaders()       |
-| files      | $request->getUploadedFiles() |
-| cookie     | $request->getCookieParams()  |
+| key        | source                        |
+|------------|-------------------------------|
+| query      | $request->getQueryParams()    |
+| body       | $request->getParsedBody()     |
+| attributes | $request->getAttributes()     |
+| headers    | $request->getHeaders()        |
+| files      | $request->getUploadedFiles()  |
+| cookie     | $request->getCookieParams()   |
 | router     | $currentRoute->getArguments() |
 
 This data can be obtained as follows 
 
 ```php
-$this->requestData['router.id'];
+$this->requestData['router']['id'];
 ```
 
 or through the methods
@@ -135,7 +135,35 @@ $this->hasAttribute('body.user_id');
 $this->getAttributeValue('body.user_id');
 ```
 
+#### Attributes
 
+You can use attributes in an action handler to get data from a request:
+
+```php
+use Psr\Http\Message\ResponseInterface;
+use Yiisoft\RequestModel\Attribute\RouteParam;
+
+final class SimpleController
+{
+    public function action(#[RouteParam('id')] int $id, #[ReqAttribute('foo')] $attribute,): ResponseInterface
+    {
+        echo $id;
+        //...
+    }
+}
+```
+
+Attributes are also supported in closure actions.
+
+There are several attributes out of the box:
+
+| Name          | Source                    |
+|---------------|---------------------------|
+| ParsedBody    | Parsed body of request    |
+| QueryParam    | Query parameter of URI    |
+| ReqAttribute  | Attribute of request      |
+| RouteParam    | Argument of current route |
+| UploadedFiles | Uploaded files of request |
 
 ### Unit testing
 
