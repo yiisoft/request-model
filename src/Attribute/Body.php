@@ -7,7 +7,7 @@ namespace Yiisoft\RequestModel\Attribute;
 use Attribute;
 
 #[Attribute(flags: Attribute::TARGET_PARAMETER)]
-final class ParsedBody implements HandlerParameterAttributeInterface
+final class Body implements HandlerParameterAttributeInterface
 {
     public function getType(): string
     {

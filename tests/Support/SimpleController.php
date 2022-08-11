@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Tests\Support;
 
 use Nyholm\Psr7\Response;
-use Yiisoft\RequestModel\Attribute\ParsedBody;
-use Yiisoft\RequestModel\Attribute\QueryParam;
-use Yiisoft\RequestModel\Attribute\ReqAttribute;
-use Yiisoft\RequestModel\Attribute\RouteParam;
+use Yiisoft\RequestModel\Attribute\Body;
+use Yiisoft\RequestModel\Attribute\Query;
+use Yiisoft\RequestModel\Attribute\Request;
+use Yiisoft\RequestModel\Attribute\Route;
 use Yiisoft\RequestModel\Attribute\UploadedFiles;
 
 final class SimpleController
@@ -29,8 +29,8 @@ final class SimpleController
     }
 
     public function actionUsingAttributes(
-        #[RouteParam('id')] int $id,
-        #[ParsedBody] $body,
+        #[Route('id')] int $id,
+        #[Body] $body,
         #[UploadedFiles] array $files
     ): Response {
         return new Response(200, [
@@ -41,8 +41,8 @@ final class SimpleController
     }
 
     public function actionUsingAttributes2(
-        #[QueryParam('page')] int $page,
-        #[ReqAttribute('attribute')] $attribute,
+        #[Query('page')] int $page,
+        #[Request('attribute')] $attribute,
     ): Response {
         return new Response(200, [
             'page' => $page,

@@ -6,11 +6,11 @@ namespace Yiisoft\RequestModel\Attribute;
 
 use PHPUnit\Framework\TestCase;
 
-class RouteParamTest extends TestCase
+class RouteTest extends TestCase
 {
     public function testInstance(): void
     {
-        $instance = new RouteParam('id');
+        $instance = new Route('id');
 
         $this->assertEquals(HandlerParameterAttributeInterface::ROUTE_PARAM, $instance->getType());
         $this->assertEquals('id', $instance->getName());

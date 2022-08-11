@@ -6,11 +6,11 @@ namespace Yiisoft\RequestModel\Attribute;
 
 use PHPUnit\Framework\TestCase;
 
-class ReqAttributeTest extends TestCase
+class RequestTest extends TestCase
 {
     public function testInstance(): void
     {
-        $instance = new ReqAttribute('foo');
+        $instance = new Request('foo');
 
         $this->assertEquals(HandlerParameterAttributeInterface::REQUEST_ATTRIBUTE, $instance->getType());
         $this->assertEquals('foo', $instance->getName());

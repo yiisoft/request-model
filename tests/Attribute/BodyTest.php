@@ -6,11 +6,11 @@ namespace Yiisoft\RequestModel\Attribute;
 
 use PHPUnit\Framework\TestCase;
 
-class ParsedBodyTest extends TestCase
+class BodyTest extends TestCase
 {
     public function testInstance(): void
     {
-        $instance = new ParsedBody();
+        $instance = new Body();
 
         $this->assertEquals(HandlerParameterAttributeInterface::REQUEST_BODY, $instance->getType());
         $this->assertNull($instance->getName());
