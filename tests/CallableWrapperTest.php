@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Tests;
 
 use Nyholm\Psr7\Response;
+use Yiisoft\RequestModel\Attribute\Body;
+use Yiisoft\RequestModel\Attribute\Request;
+use Yiisoft\RequestModel\Attribute\Route;
 use Yiisoft\RequestModel\CallableWrapper;
 use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\SimpleMiddleware;
@@ -35,6 +38,29 @@ class CallableWrapperTest extends TestCase
             [
                 ['login'],
                 ['password'],
+            ],
+            $result->getHeaders()
+        );
+    }
+
+    public function testCorrectProcessClosureWithAttributes(): void
+    {
+        $wrapper = $this->createWrapper(
+            function (#[Route('id')] int $id, #[Body] array $body, #[Request('foo')] string $foo) {
+                return new Response(400, ['id' => $id, 'body' => $body, 'foo' => $foo]);
+            }
+        );
+
+        $request = $this->createRequest(['test'])->withAttribute('foo', 'bar');
+
+        $result = $wrapper->process($request, $this->createRequestHandler());
+
+        $this->assertEquals(400, $result->getStatusCode());
+        $this->assertEquals(
+            [
+                'id' => [1],
+                'body' => ['test'],
+                'foo' => ['bar'],
             ],
             $result->getHeaders()
         );
@@ -104,8 +130,8 @@ class CallableWrapperTest extends TestCase
     private function createWrapper(callable $callback): CallableWrapper
     {
         $container = $this->createContainer();
-        $requestModelFactory = $this->createRequestModelFactory($container);
+        $parametersResolver = $this->createParametersResolver($container);
 
-        return new CallableWrapper($container, $requestModelFactory, $callback);
+        return new CallableWrapper($container, $parametersResolver, $callback);
     }
 }

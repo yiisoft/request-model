@@ -10,8 +10,6 @@ use Psr\Http\Server\MiddlewareInterface;
 use Yiisoft\Middleware\Dispatcher\MiddlewareFactoryInterface;
 
 use function get_debug_type;
-use function is_scalar;
-use function var_export;
 
 final class MiddlewareFactory implements MiddlewareFactoryInterface
 {
@@ -58,14 +56,17 @@ final class MiddlewareFactory implements MiddlewareFactoryInterface
             return;
         }
 
-        if ($this->isCallable($middlewareDefinition) && (!is_array($middlewareDefinition) || !is_object($middlewareDefinition[0]))) {
+        if ($this->isCallable($middlewareDefinition)
+            && (!is_array($middlewareDefinition)
+                || !is_object($middlewareDefinition[0]))
+        ) {
             return;
         }
 
         throw new InvalidArgumentException(
             sprintf(
                 'Parameter should be either PSR middleware class name or a callable, "%s" given.',
-                is_scalar($middlewareDefinition) ? var_export($middlewareDefinition, true) : get_debug_type($middlewareDefinition),
+                get_debug_type($middlewareDefinition),
             )
         );
     }
@@ -76,6 +77,12 @@ final class MiddlewareFactory implements MiddlewareFactoryInterface
             return true;
         }
 
-        return is_array($definition) && array_keys($definition) === [0, 1] && in_array($definition[1], class_exists($definition[0]) ? get_class_methods($definition[0]) : [], true);
+        return is_array($definition)
+            && array_keys($definition) === [0, 1]
+            && in_array(
+                $definition[1],
+                class_exists($definition[0]) ? get_class_methods($definition[0]) : [],
+                true
+            );
     }
 }

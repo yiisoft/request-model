@@ -49,8 +49,8 @@ class MiddlewareFactoryTest extends TestCase
     private function createMiddlewareFactory(): MiddlewareFactory
     {
         $container = $this->createContainer();
-        $requestModelFactory = $this->createRequestModelFactory($container);
-        $wrapperFactory = new WrapperFactory($container, $requestModelFactory);
+        $parametersResolver = $this->createParametersResolver($container);
+        $wrapperFactory = new WrapperFactory($container, $parametersResolver);
         return new MiddlewareFactory($container, $wrapperFactory);
     }
 }

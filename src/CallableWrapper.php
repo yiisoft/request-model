@@ -16,18 +16,16 @@ use Yiisoft\Injector\Injector;
 
 final class CallableWrapper implements MiddlewareInterface
 {
-    private ContainerInterface $container;
-    private RequestModelFactory $factory;
-
     /**
      * @var callable
      */
     private $callback;
 
-    public function __construct(ContainerInterface $container, RequestModelFactory $factory, callable $callback)
-    {
-        $this->container = $container;
-        $this->factory = $factory;
+    public function __construct(
+        private ContainerInterface $container,
+        private HandlerParametersResolver $parametersResolver,
+        callable $callback
+    ) {
         $this->callback = $callback;
     }
 
@@ -35,13 +33,13 @@ final class CallableWrapper implements MiddlewareInterface
     {
         $params = array_merge(
             [$request, $handler],
-            $this->factory->createInstances($request, $this->getHandlerParams())
+            $this->parametersResolver->resolve($this->getHandlerParameters(), $request)
         );
         $response = (new Injector($this->container))->invoke($this->callback, $params);
         return $response instanceof MiddlewareInterface ? $response->process($request, $handler) : $response;
     }
 
-    private function getHandlerParams(): array
+    private function getHandlerParameters(): array
     {
         return $this
             ->getReflector()
