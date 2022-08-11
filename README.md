@@ -141,11 +141,12 @@ You can use attributes in an action handler to get data from a request:
 
 ```php
 use Psr\Http\Message\ResponseInterface;
+use Yiisoft\RequestModel\Attribute\Request;
 use Yiisoft\RequestModel\Attribute\Route;
 
 final class SimpleController
 {
-    public function action(#[Route('id')] int $id, #[ReqAttribute('foo')] $attribute,): ResponseInterface
+    public function action(#[Route('id')] int $id, #[Request('foo')] $attribute,): ResponseInterface
     {
         echo $id;
         //...
