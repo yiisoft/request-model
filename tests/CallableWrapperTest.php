@@ -122,7 +122,7 @@ class CallableWrapperTest extends TestCase
 
     public function testCorrectProcessIfCallbackReturnMiddleware(): void
     {
-        $wrapper = $this->createWrapper(fn(SimpleRequestModel $requestModel) => new SimpleMiddleware());
+        $wrapper = $this->createWrapper(fn (SimpleRequestModel $requestModel) => new SimpleMiddleware());
         $result = $wrapper->process($this->createServerRequest(), $this->createRequestHandler());
         $this->assertEquals(200, $result->getStatusCode());
     }
