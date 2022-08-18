@@ -63,6 +63,20 @@ final class AuthRequest extends RequestModel implements RulesProviderInterface
 }
 ```
 
+Middleware:
+
+```php
+ Route::post('/test')
+    ->middleware(
+        fn(\Yiisoft\RequestModel\WrapperFactory $factory) => $factory->createActionWrapper(
+            SimpleController::class,
+            'action'
+        )
+    )
+    ->action([SimpleController::class, 'action'])
+    ->name('site/test')
+```
+
 Usage in controller:
 
 ```php
