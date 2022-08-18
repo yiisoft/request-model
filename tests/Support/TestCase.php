@@ -42,9 +42,11 @@ abstract class TestCase extends BaseTestCase
         return $requestHandler;
     }
 
-    public function createRequest(array $body = []): ServerRequest
+    public function createServerRequest(array $body = [], $files = []): ServerRequest
     {
-        return (new ServerRequest(Method::POST, '/'))->withParsedBody($body);
+        return (new ServerRequest(Method::POST, '/'))
+            ->withParsedBody($body)
+            ->withUploadedFiles($files);
     }
 
     public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory

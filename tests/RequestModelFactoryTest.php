@@ -16,7 +16,7 @@ class RequestModelFactoryTest extends TestCase
     public function testCorrectCreateInstanceRequestModel(): void
     {
         $factory = $this->createRequestModelFactory($this->createContainer());
-        $request = $this->createRequest(
+        $request = $this->createServerRequest(
             [
                 'login' => 'login',
                 'password' => 'password',
@@ -56,7 +56,7 @@ class RequestModelFactoryTest extends TestCase
         $factory = $this->createRequestModelFactory($this->createContainer());
         $params = (new ReflectionFunction(fn (ServerRequest $request) => ''))->getParameters();
 
-        $this->assertEmpty($factory->createInstances($this->createRequest(), $params));
+        $this->assertEmpty($factory->createInstances($this->createServerRequest(), $params));
     }
 
     public function testValidationInvalidRequestModel(): void
@@ -67,13 +67,13 @@ class RequestModelFactoryTest extends TestCase
         $factory = $this->createRequestModelFactory($this->createContainer());
         $params = (new ReflectionFunction(fn (SimpleValidationRequestModel $requestModel) => ''))->getParameters();
 
-        $factory->createInstances($this->createRequest(), $params);
+        $factory->createInstances($this->createServerRequest(), $params);
     }
 
     public function testValidationCorrectRequestModel(): void
     {
         $factory = $this->createRequestModelFactory($this->createContainer());
-        $request = $this->createRequest(
+        $request = $this->createServerRequest(
             [
                 'login' => 'login',
                 'password' => 'password',

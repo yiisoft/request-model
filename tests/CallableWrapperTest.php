@@ -24,7 +24,7 @@ class CallableWrapperTest extends TestCase
             }
         );
 
-        $request = $this->createRequest(
+        $request = $this->createServerRequest(
             [
                 'login' => 'login',
                 'password' => 'password',
@@ -51,7 +51,7 @@ class CallableWrapperTest extends TestCase
             }
         );
 
-        $request = $this->createRequest(['test'])->withAttribute('foo', 'bar');
+        $request = $this->createServerRequest(['test'])->withAttribute('foo', 'bar');
 
         $result = $wrapper->process($request, $this->createRequestHandler());
 
@@ -71,7 +71,7 @@ class CallableWrapperTest extends TestCase
         $controller = new SimpleController();
         $wrapper = $this->createWrapper([$controller, 'action']);
 
-        $request = $this->createRequest(
+        $request = $this->createServerRequest(
             [
                 'login' => 'login',
                 'password' => 'password',
@@ -101,7 +101,7 @@ class CallableWrapperTest extends TestCase
 
         $wrapper = $this->createWrapper($obj);
 
-        $request = $this->createRequest(
+        $request = $this->createServerRequest(
             [
                 'login' => 'login',
                 'password' => 'password',
@@ -122,8 +122,8 @@ class CallableWrapperTest extends TestCase
 
     public function testCorrectProcessIfCallbackReturnMiddleware(): void
     {
-        $wrapper = $this->createWrapper(fn (SimpleRequestModel $requestModel) => new SimpleMiddleware());
-        $result = $wrapper->process($this->createRequest(), $this->createRequestHandler());
+        $wrapper = $this->createWrapper(fn(SimpleRequestModel $requestModel) => new SimpleMiddleware());
+        $result = $wrapper->process($this->createServerRequest(), $this->createRequestHandler());
         $this->assertEquals(200, $result->getStatusCode());
     }
 
