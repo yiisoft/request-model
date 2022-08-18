@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Tests;
 
+use Nyholm\Psr7\Stream;
+use Nyholm\Psr7\UploadedFile;
+use Psr\Http\Message\UploadedFileInterface;
 use Yiisoft\RequestModel\RequestModel;
+use Yiisoft\RequestModel\Tests\Support\FilesRequestModel;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
 
@@ -63,6 +67,19 @@ class RequestModelTest extends TestCase
         $this->assertEquals('mike', $model->getAttributeValue('body->name.primary'));
     }
 
+    public function testRequestWithFiles()
+    {
+        $model = $this->createRequestModelWithFiles();
+        $this->assertEquals(1, $model->getId());
+
+        $photos = $model->getPhotos();
+        $this->assertIsArray($photos);
+        $this->assertCount(2, $photos);
+        foreach ($photos as $photo) {
+            $this->assertInstanceOf(UploadedFileInterface::class, $photo);
+        }
+    }
+
     private function createRequestModel(): SimpleRequestModel
     {
         $model = new SimpleRequestModel();
@@ -77,6 +94,27 @@ class RequestModelTest extends TestCase
                 'headers' => [],
                 'files' => [],
                 'cookie' => [],
+            ],
+        );
+
+        return $model;
+    }
+
+    private function createRequestModelWithFiles(): FilesRequestModel
+    {
+        $stream = Stream::create('test');
+        $model = new FilesRequestModel();
+        $model->setRequestData(
+            [
+                'body' => [
+                    'id' => 1,
+                ],
+                'files' => [
+                    'photos' => [
+                        new UploadedFile($stream, $stream->getSize(), UPLOAD_ERR_OK, 'face.jpg'),
+                        new UploadedFile($stream, $stream->getSize(), UPLOAD_ERR_OK, 'face.png'),
+                    ],
+                ],
             ],
         );
 

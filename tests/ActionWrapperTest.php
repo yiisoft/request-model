@@ -23,7 +23,7 @@ class ActionWrapperTest extends TestCase
             'action'
         );
 
-        $request = $this->createRequest(
+        $request = $this->createServerRequest(
             [
                 'login' => 'login',
                 'password' => 'password',
@@ -52,7 +52,7 @@ class ActionWrapperTest extends TestCase
             'anotherAction'
         );
 
-        $request = $this->createRequest([]);
+        $request = $this->createServerRequest([]);
 
         $result = $wrapper->process($request, $this->createRequestHandler());
 
@@ -80,8 +80,7 @@ class ActionWrapperTest extends TestCase
         ];
         $stream = Stream::create('test');
         $files = [new UploadedFile($stream, $stream->getSize(), UPLOAD_ERR_OK, 'test.txt')];
-        $request = $this->createRequest($body);
-        $request = $request->withUploadedFiles($files);
+        $request = $this->createServerRequest($body, $files);
 
         $result = $wrapper->process($request, $this->createRequestHandler());
 
@@ -106,7 +105,7 @@ class ActionWrapperTest extends TestCase
             'actionUsingAttributes2'
         );
 
-        $request = $this->createRequest([]);
+        $request = $this->createServerRequest([]);
         $request = $request->withAttribute('attribute', 'test')->withQueryParams(['page' => 1]);
 
         $result = $wrapper->process($request, $this->createRequestHandler());
