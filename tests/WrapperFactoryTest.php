@@ -16,14 +16,14 @@ class WrapperFactoryTest extends TestCase
     public function testCorrectCreateActionWrapper(): void
     {
         $factory = $this->createWrapperFactory();
-        $result = $factory->createActionWrapper(SimpleController::class, 'action');
+        $result = $factory->create([SimpleController::class, 'action']);
         $this->assertInstanceOf(ActionWrapper::class, $result);
     }
 
     public function testCorrectCreateCallableWrapper(): void
     {
         $factory = $this->createWrapperFactory();
-        $result = $factory->createCallableWrapper(fn (SimpleRequestModel $request) => '');
+        $result = $factory->create(fn (SimpleRequestModel $request) => '');
         $this->assertInstanceOf(CallableWrapper::class, $result);
     }
 
