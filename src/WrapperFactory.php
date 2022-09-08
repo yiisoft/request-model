@@ -6,8 +6,9 @@ namespace Yiisoft\RequestModel;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use Yiisoft\Middleware\Dispatcher\WrapperFactoryInterface;
 
-final class WrapperFactory
+final class WrapperFactory implements WrapperFactoryInterface
 {
     public function __construct(
         private ContainerInterface $container,
@@ -15,13 +16,14 @@ final class WrapperFactory
     ) {
     }
 
-    public function createCallableWrapper(callable $callback): MiddlewareInterface
+    /**
+     * {@inheritDoc}
+     */
+    public function create($callable): MiddlewareInterface
     {
-        return new CallableWrapper($this->container, $this->parametersResolver, $callback);
-    }
-
-    public function createActionWrapper(string $class, string $method): MiddlewareInterface
-    {
-        return new ActionWrapper($this->container, $this->parametersResolver, $class, $method);
+        if (is_array($callable)) {
+            return new ActionWrapper($this->container, $this->parametersResolver, $callable[0], $callable[1]);
+        }
+        return new CallableWrapper($this->container, $this->parametersResolver, $callable);
     }
 }
