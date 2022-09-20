@@ -68,7 +68,7 @@ Middleware:
 ```php
  Route::post('/test')
     ->middleware(
-        fn(\Yiisoft\RequestModel\WrapperFactory $factory) => $factory->createActionWrapper(
+        fn(\Yiisoft\Middleware\Dispatcher\WrapperFactoryInterface $factory) => $factory->createActionWrapper(
             SimpleController::class,
             'action'
         )
