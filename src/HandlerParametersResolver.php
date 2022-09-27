@@ -30,7 +30,6 @@ class HandlerParametersResolver
 
     /**
      * @param \ReflectionParameter[] $parameters
-     *
      */
     private function getAttributeParams(array $parameters, ServerRequestInterface $request): array
     {

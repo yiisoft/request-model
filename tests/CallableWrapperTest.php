@@ -19,7 +19,7 @@ class CallableWrapperTest extends TestCase
     public function testCorrectProcessClosure(): void
     {
         $wrapper = $this->createWrapper(
-            fn(SimpleRequestModel $requestModel) => new Response(400, [$requestModel->getLogin(), $requestModel->getPassword()])
+            fn (SimpleRequestModel $requestModel) => new Response(400, [$requestModel->getLogin(), $requestModel->getPassword()])
         );
 
         $request = $this->createServerRequest(
@@ -44,7 +44,7 @@ class CallableWrapperTest extends TestCase
     public function testCorrectProcessClosureWithAttributes(): void
     {
         $wrapper = $this->createWrapper(
-            fn(#[Route('id')] int $id, #[Body] array $body, #[Request('foo')] string $foo) => new Response(400, ['id' => $id, 'body' => $body, 'foo' => $foo])
+            fn (#[Route('id')] int $id, #[Body] array $body, #[Request('foo')] string $foo) => new Response(400, ['id' => $id, 'body' => $body, 'foo' => $foo])
         );
 
         $request = $this->createServerRequest(['test'])->withAttribute('foo', 'bar');
