@@ -48,8 +48,6 @@ final class CallableWrapper implements MiddlewareInterface
 
     /**
      * @throws \ReflectionException
-     *
-     * @return ReflectionFunction|ReflectionFunctionAbstract|ReflectionMethod
      */
     private function getReflector(): ReflectionFunctionAbstract
     {
