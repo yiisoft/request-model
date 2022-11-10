@@ -16,24 +16,17 @@ use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
 {
-    private Injector $injector;
-    private ValidatorInterface $validator;
-    private CurrentRoute $currentRoute;
-
-    public function __construct(ValidatorInterface $validator, Injector $injector, CurrentRoute $currentRoute)
-    {
-        $this->validator = $validator;
-        $this->injector = $injector;
-        $this->currentRoute = $currentRoute;
+    public function __construct(
+        private ValidatorInterface $validator,
+        private Injector $injector,
+        private CurrentRoute $currentRoute
+    ) {
     }
 
     /**
-     * @param ServerRequestInterface $request
      * @param array|ReflectionParameter[] $handlerParams
      *
      * @throws ReflectionException
-     *
-     * @return array
      */
     public function createInstances(ServerRequestInterface $request, array $handlerParams): array
     {
@@ -62,8 +55,6 @@ final class RequestModelFactory
 
     /**
      * @param array|ReflectionParameter[] $handlerParams
-     *
-     * @return array
      */
     private function getModelRequestClasses(array $handlerParams): array
     {

@@ -11,18 +11,13 @@ final class RequestValidationException extends RuntimeException
     private const MESSAGE = 'Request model validation error';
 
     /**
-     * @psalm-var array<string,string[]> $errors
-     */
-    private array $errors;
-
-    /**
      * @param string[] $errors
      *
      * @psalm-param array<string,string[]> $errors
      */
-    public function __construct(array $errors)
-    {
-        $this->errors = $errors;
+    public function __construct(
+        private array $errors
+    ) {
         parent::__construct(self::MESSAGE);
     }
 

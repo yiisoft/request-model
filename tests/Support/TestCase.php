@@ -52,7 +52,7 @@ abstract class TestCase extends BaseTestCase
 
     public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory
     {
-        $validator = new Validator(new SimpleRuleHandlerContainer(new Translator('en')));
+        $validator = new Validator(new SimpleRuleHandlerContainer(), new Translator('en'));
         return new RequestModelFactory($validator, new Injector($container), $this->getCurrentRoute());
     }
 
