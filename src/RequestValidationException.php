@@ -15,10 +15,8 @@ final class RequestValidationException extends RuntimeException
      *
      * @psalm-param array<string,string[]> $errors
      */
-    public function __construct(/**
-     * @psalm-var array<string,string[]> $errors
-     */
-    private array $errors
+    public function __construct(
+        private array $errors
     ) {
         parent::__construct(self::MESSAGE);
     }

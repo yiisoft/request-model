@@ -18,12 +18,16 @@
 Request model simplifies working with request data. It allows you to decorate data for easy retrieval and automatically
 validate it when needed.
 
+## Requirements
+
+- PHP 8.0 or higher.
+
 ## Installation
 
 The package could be installed with composer:
 
 ```
-composer require yiisoft/request-model --prefer-dist
+composer require yiisoft/request-model
 ```
 
 ## General usage

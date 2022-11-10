@@ -16,8 +16,11 @@ use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
 {
-    public function __construct(private ValidatorInterface $validator, private Injector $injector, private CurrentRoute $currentRoute)
-    {
+    public function __construct(
+        private ValidatorInterface $validator,
+        private Injector $injector,
+        private CurrentRoute $currentRoute
+    ) {
     }
 
     /**
