@@ -27,7 +27,7 @@
         "yiisoft/arrays": "^2.0",
         "yiisoft/injector": "^1.0",
         "yiisoft/middleware-dispatcher": "^3.0|^4.0",
-        "yiisoft/router": "^1.2",
+        "yiisoft/router": "^1.2|^2.0",
         "yiisoft/validator": "dev-master"
     },
     "require-dev": {
