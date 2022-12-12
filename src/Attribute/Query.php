@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Attribute;
 
 use Attribute;
+use Psr\Http\Message\ServerRequestInterface;
 
 #[Attribute(flags: Attribute::TARGET_PARAMETER | Attribute::IS_REPEATABLE)]
 final class Query implements HandlerParameterAttributeInterface
 {
-    public function __construct(private string $name)
+    public function __construct(private ?string $name)
     {
     }
 
-    public function getName(): string
+    public function resolve(ServerRequestInterface $request): mixed
     {
-        return $this->name;
-    }
+        if ($this->name !== null) {
+            return $request->getQueryParams()[$this->name] ?? null;
+        }
 
-    public function getType(): string
-    {
-        return self::QUERY_PARAM;
+        return $request->getQueryParams();
     }
 }

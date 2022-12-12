@@ -11,7 +11,7 @@ use Yiisoft\Router\CurrentRoute;
 /**
  * @internal
  */
-class HandlerParametersResolver
+final class HandlerParametersResolver
 {
     public function __construct(private RequestModelFactory $factory, private CurrentRoute $currentRoute)
     {
@@ -43,18 +43,11 @@ class HandlerParametersResolver
                 /** @var HandlerParameterAttributeInterface $attributeInstance */
                 $attributeInstance = $attribute->newInstance();
 
-                $actionParameters[$parameter->getName()] = match ($attributeInstance->getType()) {
-                    HandlerParameterAttributeInterface::ROUTE_PARAM => $this
-                        ->currentRoute
-                        ->getArgument($attributeInstance->getName()),
-                    HandlerParameterAttributeInterface::REQUEST_BODY => $request->getParsedBody(),
-                    HandlerParameterAttributeInterface::REQUEST_ATTRIBUTE => $request->getAttribute(
-                        $attributeInstance->getName()
-                    ),
-                    HandlerParameterAttributeInterface::QUERY_PARAM => $request
-                        ->getQueryParams()[$attributeInstance->getName()] ?? null,
-                    HandlerParameterAttributeInterface::UPLOADED_FILES => $request->getUploadedFiles()
-                };
+                $resolvedParameter = $attributeInstance->resolve($request);
+                if ($resolvedParameter === null && $parameter->isDefaultValueAvailable()) {
+                    $resolvedParameter = $parameter->getDefaultValue();
+                }
+                $actionParameters[$parameter->getName()] = $resolvedParameter;
             }
         }
         return $actionParameters;
