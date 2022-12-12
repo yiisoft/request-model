@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Attribute;
 
 use Attribute;
+use Psr\Http\Message\ServerRequestInterface;
 
 #[Attribute(flags: Attribute::TARGET_PARAMETER)]
 final class Body implements HandlerParameterAttributeInterface
 {
-    public function getType(): string
+    public function __construct(private ?string $name)
     {
-        return self::REQUEST_BODY;
     }
 
-    public function getName(): ?string
+    public function resolve(ServerRequestInterface $request): array|object|null
     {
-        return null;
+        if ($this->name !== null) {
+            return $request->getParsedBody()[$this->name] ?? null;
+        }
+
+        return $request->getParsedBody();
     }
 }
