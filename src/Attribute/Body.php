@@ -10,16 +10,17 @@ use Psr\Http\Message\ServerRequestInterface;
 #[Attribute(flags: Attribute::TARGET_PARAMETER)]
 final class Body implements HandlerParameterAttributeInterface
 {
-    public function __construct(private ?string $name)
+    public function __construct(private ?string $name = null)
     {
     }
 
-    public function resolve(ServerRequestInterface $request): array|object|null
+    public function getName(): ?string
     {
-        if ($this->name !== null) {
-            return $request->getParsedBody()[$this->name] ?? null;
-        }
+        return $this->name;
+    }
 
-        return $request->getParsedBody();
+    public function getResolverClassName(): string
+    {
+        return BodyResolver::class;
     }
 }

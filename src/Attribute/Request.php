@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Attribute;
 
 use Attribute;
-use Psr\Http\Message\ServerRequestInterface;
 
 #[Attribute(flags: Attribute::TARGET_PARAMETER | Attribute::IS_REPEATABLE)]
 final class Request implements HandlerParameterAttributeInterface
@@ -14,8 +13,13 @@ final class Request implements HandlerParameterAttributeInterface
     {
     }
 
-    public function resolve(ServerRequestInterface $request): mixed
+    public function getName(): string
     {
-        return $request->getAttribute($this->name);
+        return $this->name;
+    }
+
+    public function getResolverClassName(): string
+    {
+        return RequestResolver::class;
     }
 }

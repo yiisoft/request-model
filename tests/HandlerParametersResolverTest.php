@@ -9,9 +9,9 @@ use Yiisoft\RequestModel\CallableWrapper;
 use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
-use Yiisoft\RequestModel\WrapperFactory;
+use Yiisoft\RequestModel\ParametersResolver;
 
-class WrapperFactoryTest extends TestCase
+class HandlerParametersResolverTest extends TestCase
 {
     public function testCorrectCreateActionWrapper(): void
     {
@@ -27,10 +27,10 @@ class WrapperFactoryTest extends TestCase
         $this->assertInstanceOf(CallableWrapper::class, $result);
     }
 
-    private function createWrapperFactory(): WrapperFactory
+    private function createWrapperFactory(): ParametersResolver
     {
         $container = $this->createContainer();
         $parametersResolver = $this->createParametersResolver($container);
-        return new WrapperFactory($container, $parametersResolver);
+        return new ParametersResolver($container, $parametersResolver);
     }
 }

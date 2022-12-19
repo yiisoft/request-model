@@ -12,7 +12,6 @@ class RouteTest extends TestCase
     {
         $instance = new Route('id');
 
-        $this->assertEquals(HandlerParameterAttributeInterface::ROUTE_PARAM, $instance->getType());
         $this->assertEquals('id', $instance->getName());
     }
 }
