@@ -12,7 +12,6 @@ class RequestTest extends TestCase
     {
         $instance = new Request('foo');
 
-        $this->assertEquals(HandlerParameterAttributeInterface::REQUEST_ATTRIBUTE, $instance->getType());
         $this->assertEquals('foo', $instance->getName());
     }
 }

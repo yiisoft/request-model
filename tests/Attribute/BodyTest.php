@@ -12,7 +12,6 @@ class BodyTest extends TestCase
     {
         $instance = new Body();
 
-        $this->assertEquals(HandlerParameterAttributeInterface::REQUEST_BODY, $instance->getType());
         $this->assertNull($instance->getName());
     }
 }
