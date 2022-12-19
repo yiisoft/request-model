@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Attribute;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Yiisoft\Router\CurrentRoute;
 
 final class UploadedFilesResolver implements HandlerParameterResolverInterface
 {
