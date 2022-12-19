@@ -11,6 +11,5 @@ class UploadedFilesTest extends TestCase
     public function testInstance(): void
     {
         $instance = new UploadedFiles();
-
     }
 }
