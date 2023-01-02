@@ -10,8 +10,9 @@ class BodyTest extends TestCase
 {
     public function testInstance(): void
     {
-        $instance = new Body();
+        $instance = new Body('test');
 
-        $this->assertNull($instance->getName());
+        $this->assertEquals('test', $instance->getName());
+        $this->assertEquals(BodyResolver::class, $instance->getResolverClassName());
     }
 }

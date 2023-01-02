@@ -13,5 +13,6 @@ class RequestTest extends TestCase
         $instance = new Request('foo');
 
         $this->assertEquals('foo', $instance->getName());
+        $this->assertEquals(RequestResolver::class, $instance->getResolverClassName());
     }
 }

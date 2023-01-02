@@ -4,33 +4,92 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Tests;
 
-use Yiisoft\RequestModel\ActionWrapper;
-use Yiisoft\RequestModel\CallableWrapper;
+use Closure;
+use Psr\Http\Message\ServerRequestInterface;
+use ReflectionClass;
+use ReflectionFunction;
+use Yiisoft\RequestModel\Attribute\BodyResolver;
+use Yiisoft\RequestModel\Attribute\Request;
+use Yiisoft\RequestModel\Attribute\RequestResolver;
+use Yiisoft\RequestModel\Attribute\Route;
+use Yiisoft\RequestModel\Attribute\RouteResolver;
+use Yiisoft\RequestModel\Attribute\UploadedFilesResolver;
 use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
-use Yiisoft\RequestModel\ParametersResolver;
 
 class HandlerParametersResolverTest extends TestCase
 {
-    public function testCorrectCreateActionWrapper(): void
-    {
-        $factory = $this->createWrapperFactory();
-        $result = $factory->create([SimpleController::class, 'action']);
-        $this->assertInstanceOf(ActionWrapper::class, $result);
-    }
-
-    public function testCorrectCreateCallableWrapper(): void
-    {
-        $factory = $this->createWrapperFactory();
-        $result = $factory->create(fn (SimpleRequestModel $request) => '');
-        $this->assertInstanceOf(CallableWrapper::class, $result);
-    }
-
-    private function createWrapperFactory(): ParametersResolver
+    public function testCorrectResolveActionParameters(): void
     {
         $container = $this->createContainer();
-        $parametersResolver = $this->createParametersResolver($container);
-        return new ParametersResolver($container, $parametersResolver);
+        $resolver = $this->createParametersResolver($container);
+        $result = $resolver->resolve(
+            $this->getActionParameters([SimpleController::class, 'action']),
+            $this->createMock(ServerRequestInterface::class)
+        );
+        $this->assertInstanceOf(SimpleRequestModel::class, $result[0]);
+    }
+
+    public function testCorrectResolveCallbackActionParameters(): void
+    {
+        $container = $this->createContainer();
+        $resolver = $this->createParametersResolver($container);
+        $result = $resolver->resolve(
+            $this->getActionParameters(static fn (SimpleRequestModel $model) => ''),
+            $this->createMock(ServerRequestInterface::class)
+        );
+        $this->assertInstanceOf(SimpleRequestModel::class, $result[0]);
+    }
+
+    public function testCorrectResolveCallableActionParametersWithAttributes(): void
+    {
+        $container = $this->createContainer([
+            RouteResolver::class => new RouteResolver($this->getCurrentRoute()),
+            RequestResolver::class => new RequestResolver(),
+        ]);
+        $resolver = $this->createParametersResolver($container);
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getAttribute')->willReturn('foo');
+        $result = $resolver->resolve(
+            $this->getActionParameters(static fn (#[Route('id')] int $id, #[Request('test')] string $att) => ''),
+            $request
+        );
+        $this->assertEquals(1, $result['id']);
+    }
+
+    public function testCorrectResolveActionParametersWithAttributes(): void
+    {
+        $container = $this->createContainer([
+            RouteResolver::class => new RouteResolver($this->getCurrentRoute()),
+            RequestResolver::class => new RequestResolver(),
+            BodyResolver::class => new BodyResolver(),
+            UploadedFilesResolver::class => new UploadedFilesResolver(),
+        ]);
+        $resolver = $this->createParametersResolver($container);
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getUploadedFiles')->willReturn($files = [new \stdClass()]);
+        $result = $resolver->resolve(
+            $this->getActionParameters([SimpleController::class, 'actionUsingAttributes']),
+            $request
+        );
+        $this->assertEquals(1, $result['id']);
+        $this->assertSame($files, $result['files']);
+    }
+
+    /**
+     * @param callable|array{0: class-string, 1: string} $action
+     *
+     * @throws \ReflectionException
+     * @return \ReflectionParameter[]
+     */
+    private function getActionParameters(callable|array $action): array
+    {
+        if (is_callable($action)) {
+            $callable = Closure::fromCallable($action);
+            return (new ReflectionFunction($callable))->getParameters();
+        }
+
+        return (new ReflectionClass($action[0]))->getMethod($action[1])->getParameters();
     }
 }

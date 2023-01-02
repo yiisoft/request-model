@@ -13,5 +13,6 @@ class RouteTest extends TestCase
         $instance = new Route('id');
 
         $this->assertEquals('id', $instance->getName());
+        $this->assertEquals(RouteResolver::class, $instance->getResolverClassName());
     }
 }

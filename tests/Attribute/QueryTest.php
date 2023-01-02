@@ -13,5 +13,6 @@ class QueryTest extends TestCase
         $instance = new Query('page');
 
         $this->assertEquals('page', $instance->getName());
+        $this->assertEquals(QueryResolver::class, $instance->getResolverClassName());
     }
 }
