@@ -78,9 +78,10 @@ class HandlerParametersResolverTest extends TestCase
     }
 
     /**
-     * @param callable|array{0: class-string, 1: string} $action
+     * @param array{0: class-string, 1: string}|callable $action
      *
      * @throws \ReflectionException
+     *
      * @return \ReflectionParameter[]
      */
     private function getActionParameters(callable|array $action): array
