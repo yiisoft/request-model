@@ -40,16 +40,6 @@ final class SimpleController
         ]);
     }
 
-    public function actionWithDefaultValues(
-        #[Query('page')] int $page = 1,
-        #[Request('attribute')] string $attribute = 'foo',
-    ): Response {
-        return new Response(200, [
-            'page' => $page,
-            'attribute' => $attribute,
-        ]);
-    }
-
     public function actionWithWrongAttribute(#[MockAttribute] int $page = 1): Response
     {
         return new Response(200);

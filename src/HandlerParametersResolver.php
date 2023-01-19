@@ -62,10 +62,9 @@ final class HandlerParametersResolver implements ParametersResolverInterface
                 }
 
                 $resolvedParameter = $resolver->resolve($attributeInstance, $request);
-                if ($resolvedParameter === null && $parameter->isDefaultValueAvailable()) {
-                    $resolvedParameter = $parameter->getDefaultValue();
+                if ($resolvedParameter !== null) {
+                    $actionParameters[$parameter->getName()] = $resolvedParameter;
                 }
-                $actionParameters[$parameter->getName()] = $resolvedParameter;
             }
         }
         return $actionParameters;
