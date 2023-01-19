@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Attribute;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\UriInterface;
 use Yiisoft\RequestModel\Tests\Attribute\ResolverTestCase;
 
 class QueryResolverTest extends ResolverTestCase
