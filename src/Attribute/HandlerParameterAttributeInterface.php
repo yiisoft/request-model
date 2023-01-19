@@ -9,8 +9,5 @@ namespace Yiisoft\RequestModel\Attribute;
  */
 interface HandlerParameterAttributeInterface
 {
-    /**
-     * @return class-string
-     */
     public function getResolverClassName(): string;
 }
