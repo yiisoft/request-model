@@ -9,11 +9,15 @@ use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 use ReflectionFunction;
 use Yiisoft\RequestModel\Attribute\BodyResolver;
+use Yiisoft\RequestModel\Attribute\Query;
+use Yiisoft\RequestModel\Attribute\QueryResolver;
 use Yiisoft\RequestModel\Attribute\Request;
 use Yiisoft\RequestModel\Attribute\RequestResolver;
 use Yiisoft\RequestModel\Attribute\Route;
 use Yiisoft\RequestModel\Attribute\RouteResolver;
 use Yiisoft\RequestModel\Attribute\UploadedFilesResolver;
+use Yiisoft\RequestModel\Tests\Support\MockAttribute;
+use Yiisoft\RequestModel\Tests\Support\MockHandler;
 use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
@@ -42,6 +46,32 @@ class HandlerParametersResolverTest extends TestCase
         $this->assertInstanceOf(SimpleRequestModel::class, $result[0]);
     }
 
+    public function testErrorResolveActionParameters(): void
+    {
+        $container = $this->createContainer([MockHandler::class => new MockHandler()]);
+        $resolver = $this->createParametersResolver($container);
+
+        $this->expectException(\RuntimeException::class);
+
+        $resolver->resolve(
+            $this->getActionParameters([SimpleController::class, 'actionWithWrongAttribute']),
+            $this->createMock(ServerRequestInterface::class)
+        );
+    }
+
+    public function testErrorResolveCallbackActionParameters(): void
+    {
+        $container = $this->createContainer([MockHandler::class => new MockHandler()]);
+        $resolver = $this->createParametersResolver($container);
+
+        $this->expectException(\RuntimeException::class);
+
+        $resolver->resolve(
+            $this->getActionParameters(static fn (#[MockAttribute] $page = 1) => ''),
+            $this->createMock(ServerRequestInterface::class)
+        );
+    }
+
     public function testCorrectResolveCallableActionParametersWithAttributes(): void
     {
         $container = $this->createContainer([
@@ -56,6 +86,22 @@ class HandlerParametersResolverTest extends TestCase
             $request
         );
         $this->assertEquals(1, $result['id']);
+    }
+
+    public function testCorrectResolveCallableActionParametersWithDefaultValues(): void
+    {
+        $container = $this->createContainer([
+            RouteResolver::class => new RouteResolver($this->getCurrentRoute()),
+            RequestResolver::class => new RequestResolver(),
+        ]);
+        $resolver = $this->createParametersResolver($container);
+        $request = $this->createMock(ServerRequestInterface::class);
+        $result = $resolver->resolve(
+            $this->getActionParameters(static fn (#[Route('page')] int $page = 1, #[Request('test')] string $att = 'foo') => ''),
+            $request
+        );
+        $this->assertEquals(1, $result['page']);
+        $this->assertEquals('foo', $result['att']);
     }
 
     public function testCorrectResolveActionParametersWithAttributes(): void
@@ -75,6 +121,22 @@ class HandlerParametersResolverTest extends TestCase
         );
         $this->assertEquals(1, $result['id']);
         $this->assertSame($files, $result['files']);
+    }
+
+    public function testCorrectResolveActionParametersWithDefaultValues(): void
+    {
+        $container = $this->createContainer([
+            QueryResolver::class => new QueryResolver(),
+            RequestResolver::class => new RequestResolver(),
+        ]);
+        $resolver = $this->createParametersResolver($container);
+        $request = $this->createMock(ServerRequestInterface::class);
+        $result = $resolver->resolve(
+            $this->getActionParameters([SimpleController::class, 'actionWithDefaultValues']),
+            $request
+        );
+        $this->assertEquals(1, $result['page']);
+        $this->assertEquals('foo', $result['attribute']);
     }
 
     /**

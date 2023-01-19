@@ -49,7 +49,7 @@ final class HandlerParametersResolver implements ParametersResolverInterface
                 /** @var HandlerParameterAttributeInterface $attributeInstance */
                 $attributeInstance = $attribute->newInstance();
                 $resolver = $this->container->get($attributeInstance->getResolverClassName());
-                if (!$resolver instanceof HandlerParameterResolverInterface) {
+                if (!($resolver instanceof HandlerParameterResolverInterface)) {
                     throw new \RuntimeException(
                         sprintf(
                             'Resolver "%s" should implement %s.',
