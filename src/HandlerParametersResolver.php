@@ -21,6 +21,8 @@ final class HandlerParametersResolver implements ParametersResolverInterface
     /**
      * {@inheritDoc}
      *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      * @throws \ReflectionException
      */
     public function resolve(array $parameters, ServerRequestInterface $request): array
