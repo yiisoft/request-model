@@ -9,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 use ReflectionFunction;
 use Yiisoft\RequestModel\Attribute\BodyResolver;
-use Yiisoft\RequestModel\Attribute\QueryResolver;
 use Yiisoft\RequestModel\Attribute\Request;
 use Yiisoft\RequestModel\Attribute\RequestResolver;
 use Yiisoft\RequestModel\Attribute\Route;
