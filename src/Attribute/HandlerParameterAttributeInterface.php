@@ -9,13 +9,5 @@ namespace Yiisoft\RequestModel\Attribute;
  */
 interface HandlerParameterAttributeInterface
 {
-    public const ROUTE_PARAM = 'route_param';
-    public const REQUEST_BODY = 'request_body';
-    public const REQUEST_ATTRIBUTE = 'request_attribute';
-    public const UPLOADED_FILES = 'uploaded_files';
-    public const QUERY_PARAM = 'query_param';
-
-    public function getName(): ?string;
-
-    public function getType(): string;
+    public function getResolverClassName(): string;
 }

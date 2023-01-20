@@ -18,8 +18,8 @@ final class Route implements HandlerParameterAttributeInterface
         return $this->name;
     }
 
-    public function getType(): string
+    public function getResolverClassName(): string
     {
-        return self::ROUTE_PARAM;
+        return RouteResolver::class;
     }
 }

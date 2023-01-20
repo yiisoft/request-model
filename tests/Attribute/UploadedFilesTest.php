@@ -12,7 +12,6 @@ class UploadedFilesTest extends TestCase
     {
         $instance = new UploadedFiles();
 
-        $this->assertEquals(HandlerParameterAttributeInterface::UPLOADED_FILES, $instance->getType());
-        $this->assertNull($instance->getName());
+        $this->assertEquals(UploadedFilesResolver::class, $instance->getResolverClassName());
     }
 }

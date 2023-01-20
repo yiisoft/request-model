@@ -6,8 +6,6 @@ namespace Yiisoft\RequestModel\Tests\Support;
 
 use Nyholm\Psr7\Response;
 use Yiisoft\RequestModel\Attribute\Body;
-use Yiisoft\RequestModel\Attribute\Query;
-use Yiisoft\RequestModel\Attribute\Request;
 use Yiisoft\RequestModel\Attribute\Route;
 use Yiisoft\RequestModel\Attribute\UploadedFiles;
 
@@ -40,13 +38,8 @@ final class SimpleController
         ]);
     }
 
-    public function actionUsingAttributes2(
-        #[Query('page')] int $page,
-        #[Request('attribute')] $attribute,
-    ): Response {
-        return new Response(200, [
-            'page' => $page,
-            'attribute' => $attribute,
-        ]);
+    public function actionWithWrongAttribute(#[MockAttribute] int $page = 1): Response
+    {
+        return new Response(200);
     }
 }

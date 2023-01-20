@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel;
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Yiisoft\Middleware\Dispatcher\ParametersResolverInterface;
 use Yiisoft\RequestModel\Attribute\HandlerParameterAttributeInterface;
-use Yiisoft\Router\CurrentRoute;
+use Yiisoft\RequestModel\Attribute\HandlerParameterResolverInterface;
 
-/**
- * @internal
- */
-class HandlerParametersResolver
+final class HandlerParametersResolver implements ParametersResolverInterface
 {
-    public function __construct(private RequestModelFactory $factory, private CurrentRoute $currentRoute)
+    public function __construct(private RequestModelFactory $factory, private ContainerInterface $container)
     {
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      * @throws \ReflectionException
      */
     public function resolve(array $parameters, ServerRequestInterface $request): array
@@ -30,6 +35,9 @@ class HandlerParametersResolver
 
     /**
      * @param \ReflectionParameter[] $parameters
+     *
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     private function getAttributeParams(array $parameters, ServerRequestInterface $request): array
     {
@@ -42,19 +50,21 @@ class HandlerParametersResolver
             foreach ($attributes as $attribute) {
                 /** @var HandlerParameterAttributeInterface $attributeInstance */
                 $attributeInstance = $attribute->newInstance();
+                $resolver = $this->container->get($attributeInstance->getResolverClassName());
+                if (!($resolver instanceof HandlerParameterResolverInterface)) {
+                    throw new \RuntimeException(
+                        sprintf(
+                            'Resolver "%s" should implement %s.',
+                            $resolver::class,
+                            HandlerParameterResolverInterface::class
+                        )
+                    );
+                }
 
-                $actionParameters[$parameter->getName()] = match ($attributeInstance->getType()) {
-                    HandlerParameterAttributeInterface::ROUTE_PARAM => $this
-                        ->currentRoute
-                        ->getArgument($attributeInstance->getName()),
-                    HandlerParameterAttributeInterface::REQUEST_BODY => $request->getParsedBody(),
-                    HandlerParameterAttributeInterface::REQUEST_ATTRIBUTE => $request->getAttribute(
-                        $attributeInstance->getName()
-                    ),
-                    HandlerParameterAttributeInterface::QUERY_PARAM => $request
-                        ->getQueryParams()[$attributeInstance->getName()] ?? null,
-                    HandlerParameterAttributeInterface::UPLOADED_FILES => $request->getUploadedFiles()
-                };
+                $resolvedParameter = $resolver->resolve($attributeInstance, $request);
+                if ($resolvedParameter !== null) {
+                    $actionParameters[$parameter->getName()] = $resolvedParameter;
+                }
             }
         }
         return $actionParameters;

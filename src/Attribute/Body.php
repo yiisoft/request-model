@@ -6,16 +6,20 @@ namespace Yiisoft\RequestModel\Attribute;
 
 use Attribute;
 
-#[Attribute(flags: Attribute::TARGET_PARAMETER)]
+#[Attribute(flags: Attribute::TARGET_PARAMETER | Attribute::IS_REPEATABLE)]
 final class Body implements HandlerParameterAttributeInterface
 {
-    public function getType(): string
+    public function __construct(private ?string $name = null)
     {
-        return self::REQUEST_BODY;
     }
 
     public function getName(): ?string
     {
-        return null;
+        return $this->name;
+    }
+
+    public function getResolverClassName(): string
+    {
+        return BodyResolver::class;
     }
 }

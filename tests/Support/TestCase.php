@@ -20,14 +20,17 @@ use Yiisoft\Validator\Validator;
 
 abstract class TestCase extends BaseTestCase
 {
-    public function createContainer(): ContainerInterface
+    public function createContainer(array $definitions = []): ContainerInterface
     {
         return new SimpleContainer(
-            [
-                SimpleMiddleware::class => new SimpleMiddleware(),
-                SimpleController::class => new SimpleController(),
-                CurrentRoute::class => $this->getCurrentRoute(),
-            ]
+            array_merge(
+                [
+                    SimpleMiddleware::class => new SimpleMiddleware(),
+                    SimpleController::class => new SimpleController(),
+                    CurrentRoute::class => $this->getCurrentRoute(),
+                ],
+                $definitions
+            )
         );
     }
 
@@ -56,13 +59,13 @@ abstract class TestCase extends BaseTestCase
 
     public function createParametersResolver(ContainerInterface $container): HandlerParametersResolver
     {
-        return new HandlerParametersResolver($this->createRequestModelFactory($container), $this->getCurrentRoute());
+        return new HandlerParametersResolver($this->createRequestModelFactory($container), $container);
     }
 
-    private function getCurrentRoute(): CurrentRoute
+    protected function getCurrentRoute(): CurrentRoute
     {
         $currentRoute = new CurrentRoute();
-        $currentRoute->setRouteWithArguments(Route::get('/'), ['id' => '1']);
+        $currentRoute->setRouteWithArguments(Route::get('/{id}'), ['id' => '1']);
         return $currentRoute;
     }
 }

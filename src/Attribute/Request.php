@@ -13,13 +13,13 @@ final class Request implements HandlerParameterAttributeInterface
     {
     }
 
-    public function getType(): string
-    {
-        return self::REQUEST_ATTRIBUTE;
-    }
-
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getResolverClassName(): string
+    {
+        return RequestResolver::class;
     }
 }

@@ -30,7 +30,11 @@ The package could be installed with composer:
 composer require yiisoft/request-model
 ```
 
+According to [`yiisoft/middleware-dispatcher`](https://github.com/yiisoft/middleware-dispatcher) docs, you need to set
+the implementation of `ParametersResolverInterface` to `HandlerParametersResolver` via container or pass directly.
+
 ## General usage
+
 
 A simple version of the request model looks like the following:
 
@@ -72,7 +76,7 @@ Middleware:
 ```php
  Route::post('/test')
     ->middleware(
-        fn(\Yiisoft\Middleware\Dispatcher\WrapperFactoryInterface $factory) => $factory->createActionWrapper(
+        fn(\Yiisoft\Middleware\Dispatcher\MiddlewareFactory $factory) => $factory->create(
             SimpleController::class,
             'action'
         )

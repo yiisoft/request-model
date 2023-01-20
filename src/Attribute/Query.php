@@ -9,17 +9,17 @@ use Attribute;
 #[Attribute(flags: Attribute::TARGET_PARAMETER | Attribute::IS_REPEATABLE)]
 final class Query implements HandlerParameterAttributeInterface
 {
-    public function __construct(private string $name)
+    public function __construct(private ?string $name = null)
     {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getType(): string
+    public function getResolverClassName(): string
     {
-        return self::QUERY_PARAM;
+        return QueryResolver::class;
     }
 }

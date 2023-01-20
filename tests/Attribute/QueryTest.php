@@ -12,7 +12,7 @@ class QueryTest extends TestCase
     {
         $instance = new Query('page');
 
-        $this->assertEquals(HandlerParameterAttributeInterface::QUERY_PARAM, $instance->getType());
         $this->assertEquals('page', $instance->getName());
+        $this->assertEquals(QueryResolver::class, $instance->getResolverClassName());
     }
 }
