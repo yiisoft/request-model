@@ -62,7 +62,7 @@ class RequestModelFactoryTest extends TestCase
     public function testValidationInvalidRequestModel(): void
     {
         $this->expectException(RequestValidationException::class);
-        $this->expectDeprecationMessage('Request model validation error');
+        $this->expectExceptionMessage('Request model validation error');
 
         $factory = $this->createRequestModelFactory($this->createContainer());
         $params = (new ReflectionFunction(fn (SimpleValidationRequestModel $requestModel) => ''))->getParameters();
