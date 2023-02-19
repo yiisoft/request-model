@@ -71,16 +71,10 @@ final class AuthRequest extends RequestModel implements RulesProviderInterface
 }
 ```
 
-Middleware:
+Route:
 
 ```php
  Route::post('/test')
-    ->middleware(
-        fn(\Yiisoft\Middleware\Dispatcher\MiddlewareFactory $factory) => $factory->create(
-            SimpleController::class,
-            'action'
-        )
-    )
     ->action([SimpleController::class, 'action'])
     ->name('site/test')
 ```
