@@ -10,16 +10,20 @@ use ReflectionException;
 use ReflectionNamedType;
 use ReflectionParameter;
 use Yiisoft\Injector\Injector;
-use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Validator\RulesProviderInterface;
 use Yiisoft\Validator\ValidatorInterface;
 
 final class RequestModelFactory
 {
+    /**
+     * @param ValidatorInterface $validator
+     * @param Injector $injector
+     * @param RequestDataProviderInterface[] $dataProviders
+     */
     public function __construct(
         private ValidatorInterface $validator,
         private Injector $injector,
-        private CurrentRoute $currentRoute
+        private array $dataProviders = [],
     ) {
     }
 
@@ -89,14 +93,19 @@ final class RequestModelFactory
 
     private function getRequestData(ServerRequestInterface $request): array
     {
-        return [
-            'query' => $request->getQueryParams(),
-            'body' => $request->getParsedBody(),
-            'attributes' => $request->getAttributes(),
-            'headers' => $request->getHeaders(),
-            'files' => $request->getUploadedFiles(),
-            'cookie' => $request->getCookieParams(),
-            'router' => $this->currentRoute->getArguments(),
-        ];
+        return array_merge(
+            [
+                'query' => $request->getQueryParams(),
+                'body' => $request->getParsedBody(),
+                'attributes' => $request->getAttributes(),
+                'headers' => $request->getHeaders(),
+                'files' => $request->getUploadedFiles(),
+                'cookie' => $request->getCookieParams(),
+            ],
+            ... array_map(
+                static fn(RequestDataProviderInterface $dataProvider) => $dataProvider->getData($request),
+                $this->dataProviders
+            )
+        );
     }
 }

@@ -6,6 +6,8 @@ namespace Yiisoft\RequestModel\Attribute;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Yiisoft\RequestModel\Tests\Attribute\ResolverTestCase;
+use Yiisoft\RequestModel\YiiRouter\Attribute\Route;
+use Yiisoft\RequestModel\YiiRouter\Attribute\RouteResolver;
 
 class RouteResolverTest extends ResolverTestCase
 {

@@ -6,7 +6,7 @@ namespace Yiisoft\RequestModel\Tests\Support;
 
 use Nyholm\Psr7\Response;
 use Yiisoft\RequestModel\Attribute\Body;
-use Yiisoft\RequestModel\Attribute\Route;
+use Yiisoft\RequestModel\YiiRouter\Attribute\Route;
 use Yiisoft\RequestModel\Attribute\UploadedFiles;
 
 final class SimpleController

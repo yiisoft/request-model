@@ -25,7 +25,6 @@
         "yiisoft/arrays": "^2.0|^3.0",
         "yiisoft/injector": "^1.0",
         "yiisoft/middleware-dispatcher": "^5.0",
-        "yiisoft/router": "^3.0",
         "yiisoft/validator": "^1.0"
     },
     "require-dev": {
@@ -38,8 +37,12 @@
         "vimeo/psalm": "^4.30|^5.4",
         "yiisoft/dummy-provider": "^1.0",
         "yiisoft/http": "^1.2",
+        "yiisoft/router": "^3.0",
         "yiisoft/test-support": "^3.0",
         "yiisoft/translator": "^3.0"
+    },
+    "suggest": {
+        "yiisoft/router": "To have access to Yii route arguments"
     },
     "autoload": {
         "psr-4": {

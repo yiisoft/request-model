@@ -54,7 +54,7 @@ abstract class TestCase extends BaseTestCase
     public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory
     {
         $validator = new Validator();
-        return new RequestModelFactory($validator, new Injector($container), $this->getCurrentRoute());
+        return new RequestModelFactory($validator, new Injector($container));
     }
 
     public function createParametersResolver(ContainerInterface $container): HandlerParametersResolver

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Attribute;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\RequestModel\YiiRouter\Attribute\Route;
+use Yiisoft\RequestModel\YiiRouter\Attribute\RouteResolver;
 
 class RouteTest extends TestCase
 {

@@ -6,23 +6,33 @@ namespace Yiisoft\RequestModel\Tests;
 
 use Nyholm\Psr7\ServerRequest;
 use ReflectionFunction;
+use Yiisoft\Injector\Injector;
+use Yiisoft\RequestModel\RequestModelFactory;
 use Yiisoft\RequestModel\RequestValidationException;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\SimpleValidationRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
+use Yiisoft\RequestModel\YiiRouter\RouterDataProvider;
+use Yiisoft\Validator\Validator;
 
 class RequestModelFactoryTest extends TestCase
 {
     public function testCorrectCreateInstanceRequestModel(): void
     {
-        $factory = $this->createRequestModelFactory($this->createContainer());
+        $factory = new RequestModelFactory(
+            new Validator(),
+            new Injector($this->createContainer()),
+            [
+                new RouterDataProvider($this->getCurrentRoute())
+            ],
+        );
         $request = $this->createServerRequest(
             [
                 'login' => 'login',
                 'password' => 'password',
             ]
         );
-        $params = (new ReflectionFunction(fn (SimpleRequestModel $requestModel) => ''))->getParameters();
+        $params = (new ReflectionFunction(fn(SimpleRequestModel $requestModel) => ''))->getParameters();
         $result = $factory->createInstances($request, $params);
 
         $this->assertCount(1, $result);

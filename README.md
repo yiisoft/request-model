@@ -158,7 +158,7 @@ You can use attributes in an action handler to get data from a request:
 ```php
 use Psr\Http\Message\ResponseInterface;
 use Yiisoft\RequestModel\Attribute\Request;
-use Yiisoft\RequestModel\Attribute\Route;
+use Yiisoft\RequestModel\YiiRouter\Attribute\Route;
 
 final class SimpleController
 {
