@@ -16,8 +16,6 @@ use Yiisoft\Validator\ValidatorInterface;
 final class RequestModelFactory
 {
     /**
-     * @param ValidatorInterface $validator
-     * @param Injector $injector
      * @param RequestDataProviderInterface[] $dataProviders
      */
     public function __construct(
