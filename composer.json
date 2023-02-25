@@ -41,7 +41,7 @@
         "yiisoft/dummy-provider": "^1.0",
         "yiisoft/http": "^1.2",
         "yiisoft/test-support": "^3.0",
-        "yiisoft/translator": "^2.0"
+        "yiisoft/translator": "^3.0"
     },
     "autoload": {
         "psr-4": {
