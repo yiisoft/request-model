@@ -23,7 +23,7 @@ class RequestModelFactoryTest extends TestCase
             new Validator(),
             new Injector($this->createContainer()),
             [
-                new RouterDataProvider($this->getCurrentRoute())
+                new RouterDataProvider($this->getCurrentRoute()),
             ],
         );
         $request = $this->createServerRequest(
@@ -32,7 +32,7 @@ class RequestModelFactoryTest extends TestCase
                 'password' => 'password',
             ]
         );
-        $params = (new ReflectionFunction(fn(SimpleRequestModel $requestModel) => ''))->getParameters();
+        $params = (new ReflectionFunction(fn (SimpleRequestModel $requestModel) => ''))->getParameters();
         $result = $factory->createInstances($request, $params);
 
         $this->assertCount(1, $result);

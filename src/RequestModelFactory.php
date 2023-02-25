@@ -103,7 +103,7 @@ final class RequestModelFactory
                 'cookie' => $request->getCookieParams(),
             ],
             ... array_map(
-                static fn(RequestDataProviderInterface $dataProvider) => $dataProvider->getData($request),
+                static fn (RequestDataProviderInterface $dataProvider) => $dataProvider->getData($request),
                 $this->dataProviders
             )
         );
