@@ -14,10 +14,16 @@ final class BodyResolver implements HandlerParameterResolverInterface
             throw new \InvalidArgumentException(sprintf('Expected "%s", got "%s".', Body::class, $attribute::class));
         }
 
+        $parsedBody = $request->getParsedBody();
+
         if ($attribute->getName() !== null) {
-            return $request->getParsedBody()[$attribute->getName()] ?? null;
+            if (!is_array($parsedBody)) {
+                throw new ValueNotFoundException();
+            }
+
+            return $parsedBody[$attribute->getName()] ?? throw new ValueNotFoundException();
         }
 
-        return $request->getParsedBody();
+        return $parsedBody;
     }
 }

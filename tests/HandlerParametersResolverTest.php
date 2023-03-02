@@ -14,11 +14,13 @@ use Yiisoft\RequestModel\Attribute\RequestResolver;
 use Yiisoft\RequestModel\Attribute\Route;
 use Yiisoft\RequestModel\Attribute\RouteResolver;
 use Yiisoft\RequestModel\Attribute\UploadedFilesResolver;
+use Yiisoft\RequestModel\HandlerParametersResolver;
 use Yiisoft\RequestModel\Tests\Support\MockAttribute;
 use Yiisoft\RequestModel\Tests\Support\MockHandler;
 use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
+use Yiisoft\Test\Support\Container\SimpleContainer;
 
 class HandlerParametersResolverTest extends TestCase
 {
@@ -103,6 +105,28 @@ class HandlerParametersResolverTest extends TestCase
         );
         $this->assertEquals(1, $result['id']);
         $this->assertSame($files, $result['files']);
+    }
+
+    public function testResolveNull(): void
+    {
+        $container = new SimpleContainer([
+            RequestResolver::class => new RequestResolver(),
+        ]);
+
+        $resolver = new HandlerParametersResolver(
+            $this->createRequestModelFactory($container),
+            $container
+        );
+
+        $fn = static fn(#[Request('test')] ?string $var = 'default') => null;
+        $parameters = (new ReflectionFunction($fn))->getParameters();
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getAttribute')->with('test')->willReturn(null);
+
+        $result = $resolver->resolve($parameters, $request);
+
+        $this->assertSame(['var' => null], $result);
     }
 
     /**
