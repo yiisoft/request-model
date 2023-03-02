@@ -24,7 +24,7 @@ final class RequestModelFactory
     }
 
     /**
-     * @param array|ReflectionParameter[] $handlerParams
+     * @param ReflectionParameter[] $handlerParams
      *
      * @throws ReflectionException
      */

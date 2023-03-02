@@ -61,8 +61,10 @@ final class HandlerParametersResolver implements ParametersResolverInterface
                     );
                 }
 
+                /** @var mixed $resolvedParameter */
                 $resolvedParameter = $resolver->resolve($attributeInstance, $request);
                 if ($resolvedParameter !== null) {
+                    /** @var mixed */
                     $actionParameters[$parameter->getName()] = $resolvedParameter;
                 }
             }
