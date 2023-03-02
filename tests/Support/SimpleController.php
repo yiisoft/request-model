@@ -8,6 +8,8 @@ use Nyholm\Psr7\Response;
 use Yiisoft\RequestModel\Attribute\Body;
 use Yiisoft\RequestModel\Attribute\Route;
 use Yiisoft\RequestModel\Attribute\UploadedFiles;
+use Yiisoft\RequestModel\RequestModel;
+use Yiisoft\RequestModel\RequestModelInterface;
 
 final class SimpleController
 {
@@ -44,6 +46,16 @@ final class SimpleController
     }
 
     public function actionUnionType(string|int $page): Response
+    {
+        return new Response(200);
+    }
+
+    public function actionAbstractRequestModel(RequestModel $model): Response
+    {
+        return new Response(200);
+    }
+
+    public function actionRequestModelInterface(RequestModelInterface $model): Response
     {
         return new Response(200);
     }
