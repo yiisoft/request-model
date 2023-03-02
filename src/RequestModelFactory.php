@@ -24,7 +24,7 @@ final class RequestModelFactory
     }
 
     /**
-     * @param array|ReflectionParameter[] $handlerParams
+     * @param ReflectionParameter[] $handlerParams
      *
      * @throws ReflectionException
      */
@@ -54,40 +54,43 @@ final class RequestModelFactory
     }
 
     /**
-     * @param array|ReflectionParameter[] $handlerParams
+     * @param ReflectionParameter[] $handlerParams
+     *
+     * @psalm-return list<class-string<RequestModelInterface>>
      */
     private function getModelRequestClasses(array $handlerParams): array
     {
         $modelClasses = [];
         foreach ($handlerParams as $param) {
-            if (!$this->paramsIsRequestModel($param)) {
+            $type = $param->getType();
+            if (
+                !$type instanceof ReflectionNamedType
+                || $type->isBuiltin()
+            ) {
                 continue;
             }
 
-            /** @var ReflectionNamedType $type */
-            $type = $param->getType();
-            $modelClasses[] = $type->getName();
+            $className = $type->getName();
+            if (!$this->isInstantiableRequestModel($className)) {
+                continue;
+            }
+
+            $modelClasses[] = $className;
         }
 
         return $modelClasses;
     }
 
-    private function paramsIsRequestModel(ReflectionParameter $param): bool
+    /**
+     * @psalm-param class-string $className
+     * @psalm-assert-if-true class-string<RequestModelInterface> $className
+     */
+    private function isInstantiableRequestModel(string $className): bool
     {
-        $type = $param->getType();
-        if (
-            !$type instanceof ReflectionNamedType
-            || $type->isBuiltin()
-        ) {
-            return false;
-        }
+        $reflectionClass = new ReflectionClass($className);
 
-        $reflectionClass = new ReflectionClass($type->getName());
-        if (!$reflectionClass->isInstantiable()) {
-            return false;
-        }
-
-        return $reflectionClass->implementsInterface(RequestModelInterface::class);
+        return $reflectionClass->isInstantiable()
+            && $reflectionClass->implementsInterface(RequestModelInterface::class);
     }
 
     private function getRequestData(ServerRequestInterface $request): array
