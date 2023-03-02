@@ -82,7 +82,12 @@ final class RequestModelFactory
             return false;
         }
 
-        return (new ReflectionClass($type->getName()))->implementsInterface(RequestModelInterface::class);
+        $reflectionClass = new ReflectionClass($type->getName());
+        if (!$reflectionClass->isInstantiable()) {
+            return false;
+        }
+
+        return $reflectionClass->implementsInterface(RequestModelInterface::class);
     }
 
     private function getRequestData(ServerRequestInterface $request): array
