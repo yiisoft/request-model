@@ -96,11 +96,23 @@ class RequestModelFactoryTest extends TestCase
         $this->assertEquals('password', $model->getPassword());
     }
 
-    public function testUnionType(): void
+    public function dataNonProcessParameters(): array
+    {
+        return [
+            'union-type' => ['actionUnionType'],
+            'abstract-request-model' => ['actionAbstractRequestModel'],
+            'request-model-interface' => ['actionRequestModelInterface'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataNonProcessParameters
+     */
+    public function testNonProcessParameters(string $action): void
     {
         $factory = $this->createRequestModelFactory();
 
-        $parameters = (new ReflectionClass(SimpleController::class))->getMethod('actionUnionType')->getParameters();
+        $parameters = (new ReflectionClass(SimpleController::class))->getMethod($action)->getParameters();
 
         $instances = $factory->createInstances($this->createServerRequest(), $parameters);
 
