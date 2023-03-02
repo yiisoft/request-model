@@ -51,8 +51,9 @@ abstract class TestCase extends BaseTestCase
             ->withUploadedFiles($files);
     }
 
-    public function createRequestModelFactory(ContainerInterface $container): RequestModelFactory
+    public function createRequestModelFactory(?ContainerInterface $container = null): RequestModelFactory
     {
+        $container ??= $this->createContainer();
         $validator = new Validator();
         return new RequestModelFactory($validator, new Injector($container), $this->getCurrentRoute());
     }
