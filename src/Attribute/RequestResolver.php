@@ -8,7 +8,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class RequestResolver implements HandlerParameterResolverInterface
 {
-
     public function resolve(HandlerParameterAttributeInterface $attribute, ServerRequestInterface $request): mixed
     {
         if ($attribute::class !== Request::class) {
