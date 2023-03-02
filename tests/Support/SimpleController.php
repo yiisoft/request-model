@@ -42,4 +42,9 @@ final class SimpleController
     {
         return new Response(200);
     }
+
+    public function actionUnionType(string|int $page): Response
+    {
+        return new Response(200);
+    }
 }

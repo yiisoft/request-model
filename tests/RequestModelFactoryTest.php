@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\RequestModel\Tests;
 
 use Nyholm\Psr7\ServerRequest;
+use ReflectionClass;
 use ReflectionFunction;
 use Yiisoft\RequestModel\RequestValidationException;
+use Yiisoft\RequestModel\Tests\Support\SimpleController;
 use Yiisoft\RequestModel\Tests\Support\SimpleRequestModel;
 use Yiisoft\RequestModel\Tests\Support\SimpleValidationRequestModel;
 use Yiisoft\RequestModel\Tests\Support\TestCase;
@@ -92,5 +94,16 @@ class RequestModelFactoryTest extends TestCase
 
         $this->assertEquals('login', $model->getLogin());
         $this->assertEquals('password', $model->getPassword());
+    }
+
+    public function testUnionType(): void
+    {
+        $factory = $this->createRequestModelFactory();
+
+        $parameters = (new ReflectionClass(SimpleController::class))->getMethod('actionUnionType')->getParameters();
+
+        $instances = $factory->createInstances($this->createServerRequest(), $parameters);
+
+        $this->assertSame([], $instances);
     }
 }
