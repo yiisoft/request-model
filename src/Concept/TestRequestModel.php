@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\RequestModel\Concept;
 
+use Yiisoft\RequestModel\Concept\Model\ModelInterface;
+
+#[Map(['body.age' => 'rawData', ''])]
 final class TestRequestModel implements ModelInterface
 {
     private ?array $rawData = null;

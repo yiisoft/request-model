@@ -5,5 +5,4 @@ namespace Yiisoft\RequestModel\Concept;
 
 interface MapperInterface
 {
-    public function getDataKeyByPropertyName()
 }

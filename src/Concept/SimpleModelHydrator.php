@@ -9,11 +9,12 @@ use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionUnionType;
+use Yiisoft\RequestModel\Concept\Model\ModelHydratorInterface;
 
 /**
  * @todo Учесть readonly-свойства
  */
-final class SimplePropertyHydrator implements PropertyHydratorInterface
+final class SimpleModelHydrator implements ModelHydratorInterface
 {
     /**
      * @psalm-var array<class-string,array<string,ReflectionProperty>
