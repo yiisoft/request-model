@@ -14,10 +14,12 @@ final class QueryResolver implements HandlerParameterResolverInterface
             throw new \InvalidArgumentException(sprintf('Expected "%s", got "%s".', Query::class, $attribute::class));
         }
 
+        $queryParams = $request->getQueryParams();
+
         if ($attribute->getName() !== null) {
-            return $request->getQueryParams()[$attribute->getName()] ?? null;
+            return $queryParams[$attribute->getName()] ?? throw new ValueNotFoundException();
         }
 
-        return $request->getQueryParams();
+        return $queryParams;
     }
 }

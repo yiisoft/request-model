@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Yiisoft\Middleware\Dispatcher\ParametersResolverInterface;
 use Yiisoft\RequestModel\Attribute\HandlerParameterAttributeInterface;
 use Yiisoft\RequestModel\Attribute\HandlerParameterResolverInterface;
+use Yiisoft\RequestModel\Attribute\ValueNotFoundException;
 
 final class HandlerParametersResolver implements ParametersResolverInterface
 {
@@ -61,11 +62,10 @@ final class HandlerParametersResolver implements ParametersResolverInterface
                     );
                 }
 
-                /** @var mixed $resolvedParameter */
-                $resolvedParameter = $resolver->resolve($attributeInstance, $request);
-                if ($resolvedParameter !== null) {
+                try {
                     /** @var mixed */
-                    $actionParameters[$parameter->getName()] = $resolvedParameter;
+                    $actionParameters[$parameter->getName()] = $resolver->resolve($attributeInstance, $request);
+                } catch (ValueNotFoundException) {
                 }
             }
         }

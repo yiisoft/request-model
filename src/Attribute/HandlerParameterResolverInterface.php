@@ -11,5 +11,8 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 interface HandlerParameterResolverInterface
 {
+    /**
+     * @throws ValueNotFoundException When value for {@see $attribute} not found.
+     */
     public function resolve(HandlerParameterAttributeInterface $attribute, ServerRequestInterface $request): mixed;
 }

@@ -19,6 +19,6 @@ final class RouteResolver implements HandlerParameterResolverInterface
             throw new \InvalidArgumentException(sprintf('Expected "%s", got "%s".', Route::class, $attribute::class));
         }
 
-        return $this->currentRoute->getArgument($attribute->getName());
+        return $this->currentRoute->getArgument($attribute->getName()) ?? throw new ValueNotFoundException();
     }
 }
