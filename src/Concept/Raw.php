@@ -8,7 +8,7 @@ use Yiisoft\Validator\RuleInterface;
 
 #[RawValidation(
     rules: [
-        'age' => new Requred,
+        'age' => new Requred(),
     ],
 )]
 final class Raw

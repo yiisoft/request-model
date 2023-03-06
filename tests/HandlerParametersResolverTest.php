@@ -118,7 +118,7 @@ class HandlerParametersResolverTest extends TestCase
             $container
         );
 
-        $fn = static fn(#[Request('test')] ?string $var = 'default') => null;
+        $fn = static fn (#[Request('test')] ?string $var = 'default') => null;
         $parameters = (new ReflectionFunction($fn))->getParameters();
 
         $request = $this->createMock(ServerRequestInterface::class);
