@@ -6,7 +6,6 @@ namespace Yiisoft\RequestModel\Concept\Model\Populator;
 
 use ReflectionClass;
 use ReflectionNamedType;
-use ReflectionParameter;
 use ReflectionProperty;
 use ReflectionType;
 use ReflectionUnionType;
@@ -161,7 +160,6 @@ final class Populator
 
         return $hydrateData;
     }
-
 
     /**
      * @psalm-return array<string,array>

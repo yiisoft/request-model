@@ -9,7 +9,8 @@ final class NameDto
     public function __construct(
         private string $first,
         private string $last,
-    ) { }
+    ) {
+    }
 
     public function getFirst(): string
     {

@@ -6,9 +6,7 @@ namespace Yiisoft\RequestModel\Concept\Model\Hydrator;
 
 use Closure;
 use ReflectionClass;
-use ReflectionNamedType;
 use ReflectionProperty;
-use ReflectionUnionType;
 
 /**
  * @todo Учесть readonly-свойства
@@ -22,9 +20,9 @@ final class SimpleHydrator implements HydratorInterface
 
     public function hydrate(object $object, array $data): void
     {
-       foreach ($data as $key => $value) {
-           $this->setPropertyValue($object, $key, $value);
-       }
+        foreach ($data as $key => $value) {
+            $this->setPropertyValue($object, $key, $value);
+        }
     }
 
     private function setPropertyValue(object $object, string $propertyName, mixed $value): void
