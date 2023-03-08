@@ -2,48 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\RequestModel\Concept;
+namespace Yiisoft\RequestModel\Concept\Model\Hydrator;
 
 use Closure;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionUnionType;
-use Yiisoft\RequestModel\Concept\Model\ModelHydratorInterface;
 
 /**
  * @todo Учесть readonly-свойства
  */
-final class SimpleModelHydrator implements ModelHydratorInterface
+final class SimpleHydrator implements HydratorInterface
 {
     /**
      * @psalm-var array<class-string,array<string,ReflectionProperty>
      */
     private static array $cache = [];
 
-    public function hydrate(object $object, string $propertyName, mixed $value): void
+    public function hydrate(object $object, array $data): void
     {
-        $property = $this->getProperty($object, $propertyName);
-        if ($property === null) {
-            return;
-        }
-
-        $type = $property->getType();
-
-        if ($type === null) {
-            $this->setPropertyValue($object, $propertyName, $value);
-            return;
-        }
-
-        if ($type instanceof ReflectionNamedType) {
-            $this->setPropertyValue($object, $propertyName, (string) $value);
-            return;
-        }
-
-        if ($type instanceof ReflectionUnionType) {
-            $this->setPropertyValue($object, $propertyName, (string) $value);
-            return;
-        }
+       foreach ($data as $key => $value) {
+           $this->setPropertyValue($object, $key, $value);
+       }
     }
 
     private function setPropertyValue(object $object, string $propertyName, mixed $value): void
