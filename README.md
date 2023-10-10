@@ -1,4 +1,15 @@
 <p align="center">
+    <b>
+        This package is deprecated. Use
+        <a href="https://github.com/yiisoft/input-http">Yii Input HTTP</a> instead.
+    </b>
+</p>
+<p align="center">
+    ❌
+</p>
+
+---
+<p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://yiisoft.github.io/docs/images/yii_logo.svg" height="100px">
     </a>
